@@ -154,9 +154,9 @@ const styles = StyleSheet.create({
   disclaimer: {
     width: 345,
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 24,
-    letterSpacing: -0.28,
+    letterSpacing: -0.4,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
