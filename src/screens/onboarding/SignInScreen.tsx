@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
+import Divider from '../../components/Divider';
 
 const { width } = Dimensions.get('window');
 
@@ -92,16 +93,22 @@ export default function SignInScreen({ navigation }: any) {
             </TouchableOpacity>
 
             {/* Sign In button */}
-            <Button label="Sign In" onPress={() => {}} variant="primary" />
+            <Button 
+              label="Sign In" 
+              onPress={() => {}} 
+              variant="primary" 
+              style={{alignItems: 'center'}}
+            />
 
-            {/* Don't have an account */}
-            <Text style={styles.noAccount}>Don't have an account?</Text>
+            {/* Horizontal divider with label */}
+            <Divider label="Don't have an account?" />
 
             {/* Create Account button */}
             <Button
               label="Create Account"
               onPress={() => navigation.navigate('CreateAccount')}
               variant="secondary"
+              style={{alignItems: 'center'}}
             />
 
           </View>
