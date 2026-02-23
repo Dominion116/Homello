@@ -19,7 +19,7 @@ export default function SocialButton({ label, icon, onPress }: Props) {
 const styles = StyleSheet.create({
   button: {
     width: 335,
-    height: 60,
+    height: 55,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.10)',

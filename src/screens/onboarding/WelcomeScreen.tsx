@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   disclaimer: {
-    width: 335,
+    width: 320,
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
     lineHeight: 25,

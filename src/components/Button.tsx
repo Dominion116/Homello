@@ -25,7 +25,7 @@ export default function Button({ label, onPress, variant = 'primary', style }: P
 const styles = StyleSheet.create({
   base: {
     width: 335,
-    height: 60,
+    height: 55,
     borderRadius: 20,
     paddingHorizontal: 20,
     alignItems: 'flex-start',

@@ -38,14 +38,11 @@ export default function SignInScreen({ navigation }: any) {
         />
       </ImageBackground>
 
-      {/* Main content overlaid */}
-      <View style={[
-        styles.content,
-        {
-          top: 60,
-          paddingBottom: insets.bottom + 24,
-        }
-      ]}>
+      {/* Main content */}
+      <View style={[styles.content, { paddingBottom: insets.bottom + 24 }]}>
+
+        {/* Spacer — pushes header down toward the gradient */}
+        <View style={{ flex: 1 }} />
 
         {/* TOP CONTENT — header */}
         <View style={styles.topContent}>
@@ -69,9 +66,7 @@ export default function SignInScreen({ navigation }: any) {
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
-              icon={
-                <Feather name="at-sign" size={20} color="rgba(13,13,13,0.4)" />
-              }
+              icon={<Feather name="at-sign" size={20} color="rgba(13,13,13,0.4)" />}
             />
 
             {/* Password input */}
@@ -80,9 +75,7 @@ export default function SignInScreen({ navigation }: any) {
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
-              icon={
-                <Feather name="lock" size={20} color="rgba(13,13,13,0.4)" />
-              }
+              icon={<Feather name="lock" size={20} color="rgba(13,13,13,0.4)" />}
               rightIcon={
                 <Feather
                   name={showPassword ? 'eye-off' : 'eye'}
@@ -94,19 +87,12 @@ export default function SignInScreen({ navigation }: any) {
             />
 
             {/* Forgot password */}
-            <TouchableOpacity
-              style={styles.forgotContainer}
-              onPress={() => {}}
-            >
+            <TouchableOpacity onPress={() => {}}>
               <Text style={styles.forgotText}>Forgot password?</Text>
             </TouchableOpacity>
 
             {/* Sign In button */}
-            <Button
-              label="Sign In"
-              onPress={() => {}}
-              variant="primary"
-            />
+            <Button label="Sign In" onPress={() => {}} variant="primary" />
 
             {/* Don't have an account */}
             <Text style={styles.noAccount}>Don't have an account?</Text>
@@ -153,77 +139,77 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 180,
+    height: 220,
   },
   content: {
-    position: 'absolute',
-    left: 24,
-    right: 24,
-    bottom: 0,
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 60,
     gap: 32,
-    paddingTop: 16,
   },
   topContent: {
-    width: 345,
+    width: 335,
     gap: 16,
   },
   header: {
-    width: 345,
-    gap: 8,
+    width: 335,
+    gap: 7,
   },
   title: {
-    width: 345,
+    width: 335,
     height: 48,
     fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 40,
-    lineHeight: 40,
-    letterSpacing: -0.4,
+    fontSize: 45,
+    lineHeight: 45,
+    letterSpacing: -1,
     textAlign: 'center',
     color: '#0D0D0D',
   },
   subtitle: {
-    width: 345,
+    width: 320,
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
-    lineHeight: 21,       // 150% of 14px
-    letterSpacing: -0.28, // -2% of 14px
+    fontSize: 16,
+    lineHeight: 24,
+    letterSpacing: -0.32,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
   },
   frame: {
-    width: 345,
+    width: 335,
     gap: 16,
+    height: 360,
   },
   inputContainer: {
-    width: 345,
-    gap: 16,
-  },
-  forgotContainer: {
-    alignSelf: 'flex-end',
+    width: 335,
+    gap: 10,
+    height: 316,
   },
   forgotText: {
     fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 14,
+    fontSize: 16,
     color: '#0039FF',
-    letterSpacing: -0.28,
+    letterSpacing: -0.32,
+    textAlign: 'center',
+    width: 335,
   },
   noAccount: {
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     color: '#0D0D0D',
     opacity: 0.6,
     textAlign: 'center',
-    letterSpacing: -0.28,
+    letterSpacing: -0.32,
   },
   disclaimer: {
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 24,
-    letterSpacing: -0.28,
+    letterSpacing: -0.32,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
+    width: 320,
   },
   disclaimerLink: {
     color: '#0D0D0D',
