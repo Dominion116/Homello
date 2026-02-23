@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../screens/onboarding/SplashScreen';
 import WelcomeScreen from '../screens/onboarding/WelcomeScreen';
 import SignInScreen from '../screens/onboarding/SignInScreen';
+import CreateAccountScreen from '../screens/onboarding/CreateAccountScreen';
 
 const Stack = createStackNavigator();
 
@@ -12,6 +13,7 @@ export default function OnboardingNavigator() {
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen}/>
+      <Stack.Screen name="CreateAccount" component={CreateAccountScreen}/>
     </Stack.Navigator>
   );
 }
