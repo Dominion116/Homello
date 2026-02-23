@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import ScreenWrapper from '../../components/ScreenWrapper';
 
 export default function CreateAccountScreen() {
   return (
-    <View>
-      <Text>CreateAccountScreen</Text>
-    </View>
+    <ScreenWrapper>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>CreateAccountScreen</Text>
+      </View>
+    </ScreenWrapper>
   );
 }
