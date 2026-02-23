@@ -43,7 +43,7 @@ export default function SplashScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',  // ← was '#000', remove black
+    backgroundColor: '#FFFFFF', 
   },
   background: {
     flex: 1,
@@ -59,16 +59,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.30)',
   },
   titleContainer: {
-    flex: 1,                    // ← use flex instead of absolute positioning
+    flex: 1,        
     alignItems: 'center',
-    justifyContent: 'center',   // ← this centers it vertically
+    justifyContent: 'center',
   },
   title: {
     fontFamily: 'Inter_18pt-SemiBold',
     fontSize: 45,
     color: '#FFFFFF',
-    letterSpacing: 1,
+    letterSpacing: -1,
     lineHeight: 45,
-    textAlign: 'center',        // ← centers horizontally
+    textAlign: 'center',
   },
 });
+
