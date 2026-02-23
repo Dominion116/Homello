@@ -11,6 +11,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Button from '../../components/Button';
 import SocialButton from '../../components/SocialButton';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,7 +29,10 @@ export default function WelcomeScreen({ navigation }: any) {
         resizeMode="cover"
       >
         {/* White gradient fade at bottom of image */}
-        <View style={styles.imageGradient} />
+        <LinearGradient
+          colors={['transparent', '#FFFFFF']}
+          style={styles.imageGradient}
+        />
       </ImageBackground>
 
       {/* Content overlaid on top of image */}
@@ -98,19 +102,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   imageGradient: {
-    height: 80,
-    // Fade from transparent to white at bottom of image
-    backgroundColor: 'transparent',
-    backgroundImage: undefined,
-    // React Native doesn't support CSS gradients natively
-    // so we layer white with decreasing opacity
-    borderBottomWidth: 0,
-    shadowColor: '#FFFFFF',
-    shadowOffset: { width: 0, height: -40 },
-    shadowOpacity: 1,
-    shadowRadius: 40,
-    elevation: 0,
-  },
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 250,
+},
   content: {
     flex: 1,
     justifyContent: 'flex-end',   // push everything to bottom
@@ -126,16 +123,16 @@ const styles = StyleSheet.create({
   title: {
     width: 280,
     fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 40,
-    lineHeight: 40,
-    letterSpacing: -0.4,
+    fontSize: 45,
+    lineHeight: 45,
+    letterSpacing: -1,
     textAlign: 'center',
     color: '#0D0D0D',
   },
   subtitle: {
     width: 280,
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 16,
+    fontSize: 17,
     lineHeight: 24,
     letterSpacing: -0.32,
     textAlign: 'center',
@@ -146,6 +143,8 @@ const styles = StyleSheet.create({
     width: 345,
     alignSelf: 'center',
     gap: 24,
+    marginRight: 20,
+    marginLeft: 20,
   },
   inputContainer: {
     width: 345,
@@ -155,15 +154,17 @@ const styles = StyleSheet.create({
     width: 345,
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
-    lineHeight: 24,
-    letterSpacing: -0.4,
+    lineHeight: 25,
+    letterSpacing: -0.45,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
+    marginRight: 20,
+    marginLeft: 20,
   },
   disclaimerLink: {
-    color: '#0D0D0D',      // ← #0D0D0D as requested
+    color: '#000000',
     opacity: 1,
-    fontFamily: 'Inter_18pt-SemiBold',  // bold to distinguish links
+    fontFamily: 'Inter_18pt-Medium',
   },
 });

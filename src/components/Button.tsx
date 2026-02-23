@@ -38,13 +38,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.05)',
   },
   primaryText: {
-    fontFamily: 'Inter_18pt-SemiBold',
+    fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
     color: '#FFFFFF',
     letterSpacing: -0.32,
   },
   secondaryText: {
-    fontFamily: 'Inter_18pt-SemiBold',
+    fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
     color: '#0D0D0D',
     letterSpacing: -0.32,
