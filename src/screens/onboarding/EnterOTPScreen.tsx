@@ -36,7 +36,6 @@ export default function EnterOTPScreen({ navigation }: any) {
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
-      {/* Main container */}
       <View style={[
         styles.mainContainer,
         {
@@ -62,11 +61,9 @@ export default function EnterOTPScreen({ navigation }: any) {
 
           {/* Fields container */}
           <View style={styles.fieldsContainer}>
-
-            {/* OTP fields container */}
             <View style={styles.otpFieldsContainer}>
 
-              {/* OTP input container — 5 boxes */}
+              {/* OTP boxes */}
               <View style={styles.otpInputContainer}>
                 {otp.map((digit, index) => (
                   <TextInput
@@ -97,7 +94,6 @@ export default function EnterOTPScreen({ navigation }: any) {
               </View>
 
             </View>
-
           </View>
 
           {/* Spacer */}
@@ -140,12 +136,11 @@ const styles = StyleSheet.create({
     gap: 32,
   },
   topContent: {
-    width: 335,
+    width: 345,
     height: 135,
     gap: 16,
   },
   eyebrow: {
-    width: 335,
     height: 21,
     fontFamily: 'Inter_18pt-Medium',
     fontSize: 14,
@@ -155,25 +150,20 @@ const styles = StyleSheet.create({
     color: '#0D0D0D',
   },
   headerComponent: {
-    width: 335,
-    height: 98,
     gap: 8,
   },
   title: {
-    width: 335,
     height: 48,
     fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 40,
-    lineHeight: 40,
+    fontSize: 45,
+    lineHeight: 45,
     letterSpacing: -0.4,
     textAlign: 'center',
     color: '#0D0D0D',
   },
   subtitle: {
-    width: 335,
-    height: 42,
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 21,
     letterSpacing: -0.28,
     textAlign: 'center',
@@ -182,26 +172,26 @@ const styles = StyleSheet.create({
   },
   subtitleBold: {
     fontFamily: 'Inter_18pt-Bold',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 21,
     letterSpacing: -0.28,
     color: '#0D0D0D',
   },
   formContent: {
-    width: 335,
     flex: 1,
+    alignSelf: 'stretch',
     gap: 16,
   },
   fieldsContainer: {
-    width: 335,
-    gap: 16,
+    alignSelf: 'stretch',
+    gap: 10,
   },
   otpFieldsContainer: {
-    width: 335,
+    alignSelf: 'stretch',
     gap: 16,
   },
   otpInputContainer: {
-    width: 335,
+    alignSelf: 'stretch',
     height: 60,
     flexDirection: 'row',
     gap: 10,
@@ -224,14 +214,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   resendRow: {
-    width: 335,
+    alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   resendTimer: {
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     color: '#0D0D0D',
     opacity: 0.5,
     letterSpacing: -0.28,
@@ -243,12 +233,12 @@ const styles = StyleSheet.create({
   },
   resendOTP: {
     fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 14,
+    fontSize: 16,
     color: '#0039FF',
     letterSpacing: -0.28,
   },
   bottomFrame: {
-    width: 335,
+    alignSelf: 'stretch',
     gap: 16,
   },
 });
