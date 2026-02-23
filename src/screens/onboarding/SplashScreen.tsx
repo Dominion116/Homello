@@ -4,6 +4,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions } from 'react-nativ
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors } from '../../theme/colors';
 import { fonts, fontSizes, letterSpacing } from '../../theme/typography';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,7 +19,7 @@ export default function SplashScreen({ navigation }: Props) {
     }, 2500);
     return () => clearTimeout(timer);
   }, []);
-
+  const insets = useSafeAreaInsets();
   return (
     <ImageBackground
       source={require('../../../assets/images/house-hero.png')}
@@ -33,10 +34,8 @@ export default function SplashScreen({ navigation }: Props) {
         <Text style={styles.title}>Homello</Text>
       </View>
 
-      {/* Home indicator area
-      <View style={styles.homeIndicator}>
-        <View style={styles.homeIndicatorPill} />
-      </View> */}
+      {/* Phone's native home indicator space */}
+      <View style={{ height: insets.bottom }} />
     </ImageBackground>
   );
 }
@@ -66,20 +65,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 50,
+    fontSize: 45,
     color: '#FFFFFF',
-    letterSpacing: -0.3,
-    lineHeight: 50,
+    letterSpacing: 1,
+    lineHeight: 45,
     textAlign: 'center',        // ← centers horizontally
-  },
-  homeIndicator: {
-    alignItems: 'center',
-    paddingBottom: 8,
-  },
-  pill: {
-    width: 134,
-    height: 5,
-    borderRadius: 3,
-    backgroundColor: 'rgba(255,255,255,0.3)',
   },
 });
