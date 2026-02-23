@@ -3,12 +3,13 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import OnboardingNavigator from './src/navigation/OnboardingNavigator';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     'Inter_18pt-Regular': require('./assets/fonts/Inter_18pt-Regular.ttf'),
     'Inter_18pt-Medium': require('./assets/fonts/Inter_18pt-Medium.ttf'),
     'Inter_18pt-SemiBold': require('./assets/fonts/Inter_18pt-SemiBold.ttf'),
@@ -16,10 +17,16 @@ export default function App() {
   });
 
   useEffect(() => {
-    if (fontsLoaded) SplashScreen.hideAsync();
-  }, [fontsLoaded]);
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded) return <View />;
+  if (!fontsLoaded && !fontError) return <View />;
 
-  return <OnboardingNavigator />;
+  return (
+    <NavigationContainer>
+      <OnboardingNavigator />
+    </NavigationContainer>
+  );
 }
