@@ -25,16 +25,17 @@ export default function CreateAccountScreen({ navigation }: any) {
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
       <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingTop: insets.top + 60,
-            paddingBottom: insets.bottom + 24,
-          },
-        ]}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
+  contentContainerStyle={[
+    styles.scrollContent,
+    {
+      paddingTop: insets.top + 60,
+      paddingBottom: insets.bottom + 24,
+      minHeight: '100%',
+    },
+  ]}
+  showsVerticalScrollIndicator={false}
+  keyboardShouldPersistTaps="handled"
+>
         <View style={styles.mainContainer}>
 
           {/* TOP CONTENT */}
@@ -148,23 +149,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainContainer: {
-    width: 335,
-    flex: 1,
-    justifyContent: 'space-between',
-  },
+  width: 335,
+  flex: 1,
+  justifyContent: 'space-between',
+},
 
   /* TOP SECTION */
   topSection: {
     gap: 24,
   },
   topContent: {
-    flex: 0.25,
-    justifyContent: 'space-between', // eyebrow top, header bottom
+    height: 140,                  
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   eyebrow: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 14,
+    fontFamily: 'Inter_18pt-SemiBold',
+    fontSize: 16,
     textAlign: 'center',
     color: '#0D0D0D',
   },
@@ -219,14 +220,16 @@ const styles = StyleSheet.create({
   },
   disclaimer: {
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 24,
+    letterSpacing: -0.32,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
   },
   disclaimerLink: {
-    fontFamily: 'Inter_18pt-SemiBold',
     color: '#0D0D0D',
+    fontFamily: 'Inter_18pt-SemiBold',
+    opacity: 1,
   },
 });
