@@ -1,31 +1,25 @@
-import React, { useCallback } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+// App.tsx
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import { View } from 'react-native';
 import OnboardingNavigator from './src/navigation/OnboardingNavigator';
 
-// Keep splash screen visible while fonts load
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('./src/assets/fonts/Inter-Regular.ttf'),
-    'Inter-Bold': require('./src/assets/fonts/Inter-Bold.ttf'),
+    'Inter_18pt-Regular': require('./src/assets/fonts/Inter_18pt-Regular.ttf'),
+    'Inter_18pt-Medium': require('./src/assets/fonts/Inter_18pt-Medium.ttf'),
+    'Inter_18pt-SemiBold': require('./src/assets/fonts/Inter_18pt-SemiBold.ttf'),
+    'Inter_18pt-Bold': require('./src/assets/fonts/Inter_18pt-Bold.ttf'),
   });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
+  useEffect(() => {
+    if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  if (!fontsLoaded) return <View />;
 
-  return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      <OnboardingNavigator />
-    </NavigationContainer>
-  );
+  return <OnboardingNavigator />;
 }
