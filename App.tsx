@@ -9,10 +9,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Inter_18pt-Regular': require('./src/assets/fonts/Inter_18pt-Regular.ttf'),
-    'Inter_18pt-Medium': require('./src/assets/fonts/Inter_18pt-Medium.ttf'),
-    'Inter_18pt-SemiBold': require('./src/assets/fonts/Inter_18pt-SemiBold.ttf'),
-    'Inter_18pt-Bold': require('./src/assets/fonts/Inter_18pt-Bold.ttf'),
+    'Inter_18pt-Regular': require('./assets/fonts/Inter_18pt-Regular.ttf'),
+    'Inter_18pt-Medium': require('./assets/fonts/Inter_18pt-Medium.ttf'),
+    'Inter_18pt-SemiBold': require('./assets/fonts/Inter_18pt-SemiBold.ttf'),
+    'Inter_18pt-Bold': require('./assets/fonts/Inter_18pt-Bold.ttf'),
   });
 
   useEffect(() => {
