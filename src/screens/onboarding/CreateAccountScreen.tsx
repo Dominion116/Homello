@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
+    width: 320,
   },
   disclaimerLink: {
     color: '#0D0D0D',
