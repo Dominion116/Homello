@@ -1,13 +1,21 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import ScreenWrapper from '../../components/ScreenWrapper';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Button from '../../components/Button';
+import SocialButton from '../../components/SocialButton';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export default function SignInScreen() {
-  return (
-    <ScreenWrapper>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>SignInScreen</Text>
-      </View>
-    </ScreenWrapper>
-  );
+const { width, height } = Dimensions.get('window');
+
+export default function SignInScreen({navigation} : any) {
+  const insets = useSafeAreaInsets();
+  
 }

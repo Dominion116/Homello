@@ -140,18 +140,18 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   actionsContainer: {
-    width: 345,
+    width: 335,
     alignSelf: 'center',
     gap: 24,
-    marginRight: 20,
-    marginLeft: 20,
+    marginRight: 25,
+    marginLeft: 25,
   },
   inputContainer: {
-    width: 345,
+    width: 335,
     gap: 10,
   },
   disclaimer: {
-    width: 345,
+    width: 335,
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
     lineHeight: 25,
@@ -159,8 +159,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
-    marginRight: 20,
-    marginLeft: 20,
   },
   disclaimerLink: {
     color: '#000000',
