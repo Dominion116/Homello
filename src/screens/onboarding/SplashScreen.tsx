@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -20,7 +21,7 @@ export default function SplashScreen({ navigation }: Props) {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/house-hero.png')}
+      source={require('../../../assets/images/house-hero.png')}
       style={styles.background}
       resizeMode="cover"
     >
@@ -32,45 +33,53 @@ export default function SplashScreen({ navigation }: Props) {
         <Text style={styles.title}>Homello</Text>
       </View>
 
-      {/* Home indicator area */}
+      {/* Home indicator area
       <View style={styles.homeIndicator}>
         <View style={styles.homeIndicatorPill} />
-      </View>
+      </View> */}
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',  // ← was '#000', remove black
+  },
   background: {
     flex: 1,
     width,
     height,
   },
+  imageStyle: {
+    transform: [{ translateX: 60 }],
+    width: width + 60,
+  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.overlay,
+    backgroundColor: 'rgba(0,0,0,0.30)',
   },
   titleContainer: {
-    flex: 1,
+    flex: 1,                    // ← use flex instead of absolute positioning
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center',   // ← this centers it vertically
   },
   title: {
-    fontFamily: fonts.semiBold,
-    fontSize: fontSizes.display,        // 40px from Figma
-    color: colors.white,
-    letterSpacing: letterSpacing.tight, // -1% from Figma
-    lineHeight: fontSizes.display,      // 100% line height from Figma
+    fontFamily: 'Inter_18pt-SemiBold',
+    fontSize: 50,
+    color: '#FFFFFF',
+    letterSpacing: -0.3,
+    lineHeight: 50,
+    textAlign: 'center',        // ← centers horizontally
   },
   homeIndicator: {
     alignItems: 'center',
     paddingBottom: 8,
   },
-  homeIndicatorPill: {
+  pill: {
     width: 134,
     height: 5,
     borderRadius: 3,
-    backgroundColor: colors.white,
-    opacity: 0.3,
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
 });
