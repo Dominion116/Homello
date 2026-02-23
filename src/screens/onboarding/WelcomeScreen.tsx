@@ -5,82 +5,79 @@ import {
   ImageBackground,
   StyleSheet,
   Dimensions,
-  ScrollView,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Button from '../../components/Button';
 import SocialButton from '../../components/SocialButton';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default function WelcomeScreen({ navigation }: any) {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
 
-      {/* Hero image - 393x377 */}
+      {/* Full screen background image - no white gaps */}
       <ImageBackground
         source={require('../../../assets/images/house-hero.png')}
         style={styles.heroImage}
-        imageStyle={styles.heroImageStyle}
         resizeMode="cover"
-      />
+      >
+        {/* White gradient fade at bottom of image */}
+        <View style={styles.imageGradient} />
+      </ImageBackground>
 
-      {/* White content area */}
+      {/* Content overlaid on top of image */}
       <View style={[styles.content, { paddingBottom: insets.bottom + 16 }]}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
 
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.title}>Homello</Text>
-            <Text style={styles.subtitle}>
-              Create a new account to get started exploring properties with ease
-            </Text>
-          </View>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Homello</Text>
+          <Text style={styles.subtitle}>
+            Create a new account to get started exploring properties with ease
+          </Text>
+        </View>
 
-          {/* Buttons + Disclaimer */}
-          <View style={styles.actionsContainer}>
+        {/* Buttons + Disclaimer */}
+        <View style={styles.actionsContainer}>
+          <View style={styles.inputContainer}>
 
-            {/* Input container - 4 buttons */}
-            <View style={styles.inputContainer}>
-              <Button
-                label="Sign In with Email"
-                onPress={() => navigation.navigate('SignIn')}
-                variant="primary"
-              />
-              <Button
-                label="Create new account"
-                onPress={() => navigation.navigate('CreateAccount')}
-                variant="secondary"
-              />
-              <SocialButton
-                label="Continue with Google"
-                icon={require('../../../assets/images/googleicon.png')}
-                onPress={() => {}}
-              />
-              <SocialButton
-                label="Continue with Apple"
-                icon={require('../../../assets/images/appleicon.png')}
-                onPress={() => {}}
-              />
-            </View>
-
-            {/* Disclaimer */}
-            <Text style={styles.disclaimer}>
-              By continuing you agree to our{' '}
-              <Text style={styles.disclaimerLink}>Privacy Policy</Text>
-              {' '}and{' '}
-              <Text style={styles.disclaimerLink}>Terms and Conditions</Text>
-            </Text>
+            <Button
+              label="Sign In with Email"
+              onPress={() => navigation.navigate('SignIn')}
+              variant="primary"
+            />
+            <Button
+              label="Create new account"
+              onPress={() => navigation.navigate('CreateAccount')}
+              variant="secondary"
+            />
+            <SocialButton
+              label="Continue with Google"
+              icon={require('../../../assets/images/googleicon.png')}
+              onPress={() => {}}
+            />
+            <SocialButton
+              label="Continue with Apple"
+              icon={require('../../../assets/images/appleicon.png')}
+              onPress={() => {}}
+            />
 
           </View>
-        </ScrollView>
+
+          {/* Disclaimer */}
+          <Text style={styles.disclaimer}>
+            By continuing you agree to our{' '}
+            <Text style={styles.disclaimerLink}>Privacy Policy</Text>
+            {' '}and{' '}
+            <Text style={styles.disclaimerLink}>Terms and Conditions</Text>
+          </Text>
+        </View>
+
       </View>
     </View>
   );
@@ -92,30 +89,42 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   heroImage: {
-    width: 393,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width,
     height: 377,
+    justifyContent: 'flex-end',
   },
-  heroImageStyle: {
-    transform: [{ translateX: 60 }],
-    width: width + 60,
+  imageGradient: {
+    height: 80,
+    // Fade from transparent to white at bottom of image
+    backgroundColor: 'transparent',
+    backgroundImage: undefined,
+    // React Native doesn't support CSS gradients natively
+    // so we layer white with decreasing opacity
+    borderBottomWidth: 0,
+    shadowColor: '#FFFFFF',
+    shadowOffset: { width: 0, height: -40 },
+    shadowOpacity: 1,
+    shadowRadius: 40,
+    elevation: 0,
   },
   content: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  scrollContent: {
-    paddingTop: 24,
-    alignItems: 'center',
+    justifyContent: 'flex-end',   // push everything to bottom
+    paddingHorizontal: 24,
     gap: 24,
   },
   header: {
     width: 280,
+    alignSelf: 'center',
     alignItems: 'center',
     gap: 8,
   },
   title: {
     width: 280,
-    height: 48,
     fontFamily: 'Inter_18pt-SemiBold',
     fontSize: 40,
     lineHeight: 40,
@@ -125,7 +134,6 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     width: 280,
-    height: 48,
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
     lineHeight: 24,
@@ -136,8 +144,8 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     width: 345,
-    gap: 24,
     alignSelf: 'center',
+    gap: 24,
   },
   inputContainer: {
     width: 345,
@@ -145,7 +153,6 @@ const styles = StyleSheet.create({
   },
   disclaimer: {
     width: 345,
-    height: 48,
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 14,
     lineHeight: 24,
@@ -155,8 +162,8 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   disclaimerLink: {
-    color: '#0039FF',
+    color: '#0D0D0D',      // ← #0D0D0D as requested
     opacity: 1,
-    textDecorationLine: 'underline',
+    fontFamily: 'Inter_18pt-SemiBold',  // bold to distinguish links
   },
 });

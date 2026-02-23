@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 20,
     paddingHorizontal: 20,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-  },
+},
   primary: {
     backgroundColor: '#0039FF',
   },
