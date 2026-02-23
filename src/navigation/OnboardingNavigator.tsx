@@ -4,6 +4,7 @@ import SplashScreen from '../screens/onboarding/SplashScreen';
 import WelcomeScreen from '../screens/onboarding/WelcomeScreen';
 import SignInScreen from '../screens/onboarding/SignInScreen';
 import CreateAccountScreen from '../screens/onboarding/CreateAccountScreen';
+import EnterOTPScreen from '../screens/onboarding/EnterOTPScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ export default function OnboardingNavigator() {
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen}/>
       <Stack.Screen name="CreateAccount" component={CreateAccountScreen}/>
+      <Stack.Screen name="EnterOTP" component={EnterOTPScreen}/>
     </Stack.Navigator>
   );
 }

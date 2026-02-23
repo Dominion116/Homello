@@ -1,13 +1,41 @@
+// src/screens/onboarding/EnterOTPScreen.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
-import ScreenWrapper from '../../components/ScreenWrapper';
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function EnterOTPScreen() {
+export default function EnterOTPScreen({ navigation }: any) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <ScreenWrapper>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>EnterOTPScreen</Text>
+    <View style={styles.root}>
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+
+      {/* Main container */}
+      <View style={[
+        styles.mainContainer,
+        {
+          paddingTop: insets.top + 16,
+          paddingBottom: insets.bottom + 24,
+        }
+      ]}>
+
       </View>
-    </ScreenWrapper>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  mainContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    gap: 32,
+  },
+});
