@@ -39,6 +39,32 @@ function issueJwt(userId: string): string {
 }
 
 // --- POST /auth/signup ---
+/**
+ * @swagger
+ * /auth/signup:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [fullName, email, password]
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User created, OTP sent
+ *       409:
+ *         description: Email already registered
+ */
 router.post('/signup', async (req: Request, res: Response) => {
   const { fullName, email, password } = req.body;
 
@@ -69,6 +95,30 @@ router.post('/signup', async (req: Request, res: Response) => {
 });
 
 // --- POST /auth/verify-signup-otp ---
+/**
+ * @swagger
+ * /auth/verify-signup-otp:
+ *   post:
+ *     summary: Verify signup OTP and get JWT
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, code]
+ *             properties:
+ *               email:
+ *                 type: string
+ *               code:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Returns JWT token and user object
+ *       400:
+ *         description: Invalid or expired OTP
+ */
 router.post('/verify-signup-otp', async (req: Request, res: Response) => {
   const { email, code } = req.body;
   if (!email || !code) return res.status(400).json({ error: 'email and code required' });
@@ -100,6 +150,30 @@ router.post('/verify-signup-otp', async (req: Request, res: Response) => {
 });
 
 // --- POST /auth/signin ---
+/**
+ * @swagger
+ * /auth/signin:
+ *   post:
+ *     summary: Sign in with email and password
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password]
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Returns JWT token and user object
+ *       401:
+ *         description: Invalid credentials
+ */
 router.post('/signin', async (req: Request, res: Response) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: 'email and password required' });
@@ -117,6 +191,26 @@ router.post('/signin', async (req: Request, res: Response) => {
 });
 
 // --- POST /auth/resend-signup-otp ---
+/**
+ * @swagger
+ * /auth/resend-signup-otp:
+ *   post:
+ *     summary: Resend signup verification OTP
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email]
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: OTP resent
+ */
 router.post('/resend-signup-otp', async (req: Request, res: Response) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'email required' });
@@ -145,6 +239,26 @@ router.post('/resend-signup-otp', async (req: Request, res: Response) => {
 });
 
 // --- POST /auth/request-password-reset ---
+/**
+ * @swagger
+ * /auth/request-password-reset:
+ *   post:
+ *     summary: Request a password reset OTP
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email]
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: OTP sent if email exists
+ */
 router.post('/request-password-reset', async (req: Request, res: Response) => {
   const { email } = req.body;
   const user = await prisma.user.findUnique({ where: { email } });
@@ -171,6 +285,32 @@ router.post('/request-password-reset', async (req: Request, res: Response) => {
 });
 
 // --- POST /auth/reset-password ---
+/**
+ * @swagger
+ * /auth/reset-password:
+ *   post:
+ *     summary: Reset password using OTP
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, code, newPassword]
+ *             properties:
+ *               email:
+ *                 type: string
+ *               code:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Password reset successful
+ *       400:
+ *         description: Invalid or expired OTP
+ */
 router.post('/reset-password', async (req: Request, res: Response) => {
   const { email, code, newPassword } = req.body;
   if (!email || !code || !newPassword) return res.status(400).json({ error: 'All fields required' });
@@ -203,6 +343,20 @@ router.post('/reset-password', async (req: Request, res: Response) => {
 });
 
 // --- GET /auth/me ---
+/**
+ * @swagger
+ * /auth/me:
+ *   get:
+ *     summary: Get current authenticated user
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Returns current user
+ *       401:
+ *         description: Missing or invalid token
+ */
 router.get('/me', requireAuth, async (req: AuthRequest, res: Response) => {
   const user = await prisma.user.findUnique({
     where: { id: req.userId },

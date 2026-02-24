@@ -6,7 +6,6 @@ import { env } from './config/env';
 import authRoutes from './routes/auth';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger';
-
 const app = express();
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
