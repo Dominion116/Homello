@@ -49,9 +49,8 @@ export default function PreferenceScreen({ navigation }: any) {
         style={{ flex: 1 }}
         contentContainerStyle={{
           paddingTop: 140,
-          paddingRight: 20,
+          paddingHorizontal: 24,
           paddingBottom: 123,
-          paddingLeft: 20,
           gap: 32,
         }}
         showsVerticalScrollIndicator={false}
@@ -101,13 +100,13 @@ export default function PreferenceScreen({ navigation }: any) {
                       <View style={styles.propertyInner}>
                         <Image
                           source={require('../../../assets/images/singlefamily.png')}
-                          style={{ width: 64, height: 64 }}
-                          resizeMode="contain"
+                          style={{ width: 139.5, height: 74, borderRadius: 4 }}
+                          resizeMode="cover"
                         />
                         <Text
                           style={[
                             styles.propertyText,
-                            selected && { opacity: 1, color: '#0039FF' },
+                            selected && { opacity: 1, color: '#FFFFFF' },
                           ]}
                         >
                           {type}
@@ -184,7 +183,6 @@ const styles = StyleSheet.create({
 
   /* ===== DESCRIPTION ===== */
   description: {
-    width: 353,
     fontFamily: 'Inter_28pt-semibold',
     fontSize: 32,
     lineHeight: 38,
@@ -201,7 +199,7 @@ const styles = StyleSheet.create({
 
   /* ===== PRICE BUTTONS ===== */
   dropdownButton: {
-    width: 171.5,
+    flex: 1,
     height: 60,
     borderRadius: 20,
     borderWidth: 1,
@@ -220,26 +218,23 @@ const styles = StyleSheet.create({
 
   /* ===== PROPERTY ===== */
   propertyButton: {
-    width: 171.5,
+    flex: 1,
     height: 136,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#0000001A',
-    paddingTop: 16,
-    paddingRight: 16,
-    paddingBottom: 4,
-    paddingLeft: 16,
+    padding: 8,
     backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   propertySelected: {
-    borderColor: '#0039FF',
-    backgroundColor: '#F5F8FF',
+    backgroundColor: '#000000',
+    borderWidth: 0,
   },
 
   propertyInner: {
-    width: 139.5,
-    height: 74,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
