@@ -36,7 +36,7 @@ app.use('/auth', authRoutes);
 // Global error handler
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Internal server error' });
+  res.status(500).json({ error: err.message }); // 👈 changed this
 });
 
 // Use Render's PORT env var
