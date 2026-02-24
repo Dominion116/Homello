@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_18pt-Regular',
     fontSize: Platform.OS === 'android' ? 14 : 16,
     lineHeight: 24,
-    letterSpacing: -0.32,
+    letterSpacing: -0.45,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
