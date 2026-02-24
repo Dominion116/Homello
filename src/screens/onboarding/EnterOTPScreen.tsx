@@ -136,14 +136,12 @@ const styles = StyleSheet.create({
     gap: 32,
   },
   topContent: {
-    width: 345,
-    height: 135,
-    gap: 16,
+    gap: 16, 
   },
   eyebrow: {
     height: 21,
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 14,
+    fontFamily: 'Inter_18pt-SemiBold',
+    fontSize: 16,
     lineHeight: 21,
     letterSpacing: -0.28,
     textAlign: 'center',
@@ -153,11 +151,10 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   title: {
-    height: 48,
     fontFamily: 'Inter_18pt-SemiBold',
     fontSize: 45,
     lineHeight: 45,
-    letterSpacing: -0.4,
+    letterSpacing: -1,
     textAlign: 'center',
     color: '#0D0D0D',
   },
@@ -179,19 +176,15 @@ const styles = StyleSheet.create({
   },
   formContent: {
     flex: 1,
-    alignSelf: 'stretch',
     gap: 16,
   },
   fieldsContainer: {
-    alignSelf: 'stretch',
     gap: 10,
   },
   otpFieldsContainer: {
-    alignSelf: 'stretch',
     gap: 16,
   },
   otpInputContainer: {
-    alignSelf: 'stretch',
     height: 60,
     flexDirection: 'row',
     gap: 10,
@@ -214,7 +207,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   resendRow: {
-    alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -238,7 +230,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.28,
   },
   bottomFrame: {
-    alignSelf: 'stretch',
     gap: 16,
   },
 });

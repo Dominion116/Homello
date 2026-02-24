@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     lineHeight: 45,
     textAlign: 'center',
     color: '#0D0D0D',
+    letterSpacing: -1,
   },
   subtitle: {
     fontFamily: 'Inter_18pt-Regular',
