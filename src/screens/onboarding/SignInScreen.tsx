@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { Feather } from '@expo/vector-icons';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import Divider from '../../components/Divider';
+import { useAuth } from '../../context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
@@ -23,6 +24,35 @@ export default function SignInScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { signIn, user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Goal' }],
+      });
+    }
+  }, [user, navigation]);
+
+  const handleSignIn = async () => {
+    if (loading) return;
+    setError(null);
+    setLoading(true);
+    try {
+      await signIn(email, password);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Goal' }],
+      });
+    } catch (e: any) {
+      setError(e.message ?? 'Sign in failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.root}>
@@ -96,8 +126,8 @@ export default function SignInScreen({ navigation }: any) {
 
             {/* Sign In button */}
             <Button 
-              label="Sign In" 
-              onPress={() => {}} 
+              label={loading ? 'Signing In...' : 'Sign In'} 
+              onPress={handleSignIn} 
               variant="primary" 
               style={{alignItems: 'center'}}
             />
@@ -122,6 +152,12 @@ export default function SignInScreen({ navigation }: any) {
             {' '}and{' '}
             <Text style={styles.disclaimerLink}>Terms and Conditions</Text>
           </Text>
+
+          {error ? (
+            <Text style={{ color: 'red', textAlign: 'center', marginTop: 8 }}>
+              {error}
+            </Text>
+          ) : null}
 
         </View>
       </View>

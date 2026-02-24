@@ -13,6 +13,7 @@ import { Feather } from '@expo/vector-icons';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import Divider from '../../components/Divider';
+import { API_BASE_URL } from '../../config/api';
 
 export default function CreateAccountScreen({ navigation }: any) {
   const insets = useSafeAreaInsets();
@@ -20,6 +21,30 @@ export default function CreateAccountScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCreateAccount = async () => {
+    if (loading) return;
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName, email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Signup failed');
+      }
+      navigation.navigate('EnterOTP', { email });
+    } catch (e: any) {
+      setError(e.message ?? 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.root}>
@@ -100,8 +125,8 @@ export default function CreateAccountScreen({ navigation }: any) {
           <View>
             <View style={styles.buttonFrame}>
               <Button
-                label="Create Account"
-                onPress={() => navigation.navigate('EnterOTP')}
+                label={loading ? 'Creating Account...' : 'Create Account'}
+                onPress={handleCreateAccount}
                 variant="primary"
                 style={{ alignItems: 'center' }}
               />
@@ -121,6 +146,12 @@ export default function CreateAccountScreen({ navigation }: any) {
                 style={{ alignItems: 'center' }}
               />
             </View>
+
+            {error ? (
+              <Text style={{ color: 'red', textAlign: 'center', marginTop: 8 }}>
+                {error}
+              </Text>
+            ) : null}
 
             <Text style={styles.disclaimer}>
               By continuing you agree to our{' '}

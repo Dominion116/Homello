@@ -11,11 +11,17 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Button from '../../components/Button';
 import Divider from '../../components/Divider';
+import { API_BASE_URL } from '../../config/api';
+import { useAuth } from '../../context/AuthContext';
 
-export default function EnterOTPScreen({ navigation }: any) {
+export default function EnterOTPScreen({ navigation, route }: any) {
   const insets = useSafeAreaInsets();
   const [otp, setOtp] = useState(['', '', '', '', '']);
   const inputs = useRef<Array<TextInput | null>>([]);
+  const { completeSignupWithOtp } = useAuth();
+  const email = route?.params?.email as string | undefined;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (text: string, index: number) => {
     const newOtp = [...otp];
@@ -29,6 +35,45 @@ export default function EnterOTPScreen({ navigation }: any) {
   const handleBackspace = (key: string, index: number) => {
     if (key === 'Backspace' && !otp[index] && index > 0) {
       inputs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleContinue = async () => {
+    if (!email) {
+      setError('Missing email from signup step.');
+      return;
+    }
+    const code = otp.join('');
+    if (code.length !== otp.length) {
+      setError('Please enter the full code.');
+      return;
+    }
+    if (loading) return;
+    setError(null);
+    setLoading(true);
+    try {
+      await completeSignupWithOtp(email, code);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Goal' }],
+      });
+    } catch (e: any) {
+      setError(e.message ?? 'Verification failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (!email) return;
+    try {
+      await fetch(`${API_BASE_URL}/auth/resend-signup-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+    } catch {
+      // Silently ignore for now
     }
   };
 
@@ -88,7 +133,7 @@ export default function EnterOTPScreen({ navigation }: any) {
                 <Text style={styles.resendTimer}>
                   Resend in <Text style={styles.resendTimerBold}>1:59</Text>
                 </Text>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={handleResend}>
                   <Text style={styles.resendOTP}>Resend OTP</Text>
                 </TouchableOpacity>
               </View>
@@ -102,8 +147,8 @@ export default function EnterOTPScreen({ navigation }: any) {
           {/* Bottom frame */}
           <View style={styles.bottomFrame}>
             <Button
-              label="Continue"
-              onPress={() => navigation.navigate('Goal')}
+              label={loading ? 'Verifying...' : 'Continue'}
+              onPress={handleContinue}
               variant="primary"
               style={{ alignItems: 'center' }}
             />
@@ -116,6 +161,12 @@ export default function EnterOTPScreen({ navigation }: any) {
               variant="secondary"
               style={{ alignItems: 'center' }}
             />
+
+            {error ? (
+              <Text style={{ color: 'red', textAlign: 'center', marginTop: 8 }}>
+                {error}
+              </Text>
+            ) : null}
           </View>
 
         </View>
