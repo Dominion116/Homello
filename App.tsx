@@ -5,9 +5,18 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { Asset } from 'expo-asset';
 import OnboardingNavigator from './src/navigation/OnboardingNavigator';
 
 SplashScreen.preventAutoHideAsync();
+
+const preloadAssets = async () => {
+  await Asset.loadAsync([
+    require('./assets/images/house-hero.png'),
+    require('./assets/images/googleicon.png'),
+    require('./assets/images/appleicon.png'),
+  ]);
+};
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -18,9 +27,13 @@ export default function App() {
   });
 
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
+    const prepare = async () => {
+      await preloadAssets();
+      if (fontsLoaded || fontError) {
+        SplashScreen.hideAsync();
+      }
+    };
+    prepare();
   }, [fontsLoaded, fontError]);
 
   if (!fontsLoaded && !fontError) return <View />;
