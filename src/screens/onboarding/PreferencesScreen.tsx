@@ -47,18 +47,14 @@ export default function PreferenceScreen({ navigation }: any) {
       {/* ================= SCROLLABLE CONTENT ================= */}
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{
-          paddingTop: 140,
-          paddingHorizontal: 24,
-          paddingBottom: 123,
-          gap: 32,
-        }}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 123 }}
       >
-        {/* Description */}
-        <Text style={styles.description}>
-          Tell us a little more about what you’re looking for.
-        </Text>
+        <View style={{ paddingTop: 32, paddingHorizontal: 24, gap: 32 }}>
+          {/* Description */}
+          <Text style={styles.description}>
+            Tell us a little more about what you’re looking for.
+          </Text>
 
         <View style={{ gap: 24 }}>
           {/* ============ PRICE RANGE ============ */}
@@ -100,7 +96,7 @@ export default function PreferenceScreen({ navigation }: any) {
                       <View style={styles.propertyInner}>
                         <Image
                           source={require('../../../assets/images/singlefamily.png')}
-                          style={{ width: 139.5, height: 74, borderRadius: 4 }}
+                          style={{ width: '100%', height: 74, borderRadius: 4 }}
                           resizeMode="cover"
                         />
                         <Text
@@ -118,6 +114,7 @@ export default function PreferenceScreen({ navigation }: any) {
               </View>
             ))}
           </View>
+        </View>
         </View>
       </ScrollView>
 
@@ -184,14 +181,14 @@ const styles = StyleSheet.create({
   /* ===== DESCRIPTION ===== */
   description: {
     fontFamily: 'Inter_28pt-semibold',
-    fontSize: 32,
+    fontSize: 35,
     lineHeight: 38,
     letterSpacing: -0.32,
     color: '#000',
   },
 
   sectionTitle: {
-    fontFamily: 'Inter_18pt-Medium',
+    fontFamily: 'Inter_18pt-semibold',
     fontSize: 16,
     letterSpacing: -0.32,
     color: '#000',
@@ -212,7 +209,7 @@ const styles = StyleSheet.create({
   },
 
   dropdownText: {
-    fontFamily: 'Inter_18pt-Medium',
+    fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
   },
 
@@ -235,9 +232,10 @@ const styles = StyleSheet.create({
   },
 
   propertyInner: {
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
+    gap: 8,
   },
 
   propertyText: {
