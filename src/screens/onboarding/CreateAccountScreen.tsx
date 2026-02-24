@@ -6,6 +6,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
@@ -220,14 +221,16 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   disclaimer: {
+    width: '100%',
+    maxWidth: 320,
+    alignSelf: 'center',
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 16,
+    fontSize: Platform.OS === 'android' ? 14 : 16,
     lineHeight: 24,
     letterSpacing: -0.32,
     textAlign: 'center',
     color: '#0D0D0D',
     opacity: 0.6,
-    width: 320,
   },
   disclaimerLink: {
     color: '#0D0D0D',

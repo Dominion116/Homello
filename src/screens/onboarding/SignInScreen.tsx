@@ -7,6 +7,7 @@ import {
   Dimensions,
   StatusBar,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -216,8 +217,9 @@ const styles = StyleSheet.create({
   disclaimer: {
     width: '100%',
     maxWidth: 320,
+    alignSelf: 'center',
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 16,
+    fontSize: Platform.OS === 'android' ? 14 : 16,
     lineHeight: 24,
     letterSpacing: -0.32,
     textAlign: 'center',

@@ -7,6 +7,7 @@ import {
   Dimensions,
   StatusBar,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Button from '../../components/Button';
@@ -37,7 +38,7 @@ export default function WelcomeScreen({ navigation }: any) {
       </ImageBackground>
 
       {/* Content overlaid on top of image */}
-      <View style={[styles.content, { paddingBottom: insets.bottom + 16 }]}>
+      <View style={[styles.content, { paddingBottom: insets.bottom + 24 }]}>
 
         {/* Header */}
         <View style={styles.header}>
@@ -139,20 +140,22 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   actionsContainer: {
-    width: 335,
+    width: '100%',
+    maxWidth: 335,
     alignSelf: 'center',
     gap: 24,
-    marginRight: 25,
-    marginLeft: 25,
   },
   inputContainer: {
-    width: 335,
+    width: '100%',
+    maxWidth: 335,
     gap: 10,
   },
   disclaimer: {
-    width: 320,
+    width: '100%',
+    maxWidth: 320,
+    alignSelf: 'center',
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 16,
+    fontSize: Platform.OS === 'android' ? 14 : 16,
     lineHeight: 25,
     letterSpacing: -0.45,
     textAlign: 'center',
