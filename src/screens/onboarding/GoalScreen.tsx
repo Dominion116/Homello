@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     height: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  
   },
   vector1: {
     position: 'absolute',
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     left: 6.25,
     borderLeftWidth: 1.5,
     borderBottomWidth: 1.5,
-    borderColor: '#000000',
+    borderColor: '#0D0D0D',
     transform: [{ rotate: '45deg' }],
   },
 
@@ -93,18 +94,19 @@ const styles = StyleSheet.create({
     width: 81,
     height: 19,
     fontFamily: 'Inter_18pt-Medium',
-    fontSize: 16,
-    lineHeight: 16,
+    fontSize: 18,
+    lineHeight: 18,
     letterSpacing: -0.32,
     textAlignVertical: 'center',
   },
   skipText: {
     width: 33,
     height: 19,
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 16,
-    lineHeight: 16,
+    fontFamily: 'Inter_18pt-SemiBold',
+    fontSize: 18,
+    lineHeight: 18,
     letterSpacing: -0.32,
     textAlign: 'center',
+    color: '#0039FF',
   },
 });
