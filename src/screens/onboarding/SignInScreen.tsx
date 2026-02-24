@@ -34,7 +34,8 @@ export default function SignInScreen({ navigation }: any) {
         resizeMode="cover"
       >
         <LinearGradient
-          colors={['transparent', '#FFFFFF']}
+          colors={['rgba(255, 255, 255, 0)', '#FFFFFF']}
+          locations={[0.6797, 1]}
           style={styles.imageGradient}
         />
       </ImageBackground>
@@ -142,11 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   imageGradient: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 220,
+    ...StyleSheet.absoluteFillObject,
   },
   content: {
     flex: 1,
