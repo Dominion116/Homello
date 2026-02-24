@@ -1,181 +1,110 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import ScreenWrapper from '../../components/ScreenWrapper';
-import OnboardingHeader from '../../components/OnboardingHeader';
-import Button from '../../components/Button';
-
-type GoalOption = 'buy' | 'sell' | 'looking';
-
-interface OptionItem {
-  id: GoalOption;
-  label: string;
-  icon: keyof typeof Feather.glyphMap;
-}
-
-const OPTIONS: OptionItem[] = [
-  { id: 'buy',     label: 'Buy a house',   icon: 'home' },
-  { id: 'sell',    label: 'Sell a house',  icon: 'tag' },
-  { id: 'looking', label: 'Just looking',  icon: 'search' },
-];
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function GoalScreen({ navigation }: any) {
-  const [selected, setSelected] = useState<GoalOption>('buy');
+  const insets = useSafeAreaInsets();
 
   return (
-    <ScreenWrapper backgroundColor="#F5F5F5" statusBarBg="#FFFFFF" homeIndicatorBg="#F5F5F5">
+    <View style={styles.root}>
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
-      <OnboardingHeader
-        step={2}
-        totalSteps={3}
-        onBack={() => navigation.goBack()}
-        onSkip={() => navigation.navigate('LocationPermission')}
-        showSkip
-      />
+      {/* Navigation */}
+      <View style={[styles.navigation, { paddingTop: insets.top + 8 }]}>
 
-      {/* Page content */}
-      <View style={styles.content}>
+        {/* Back button */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} activeOpacity={0.7}>
+          <View style={styles.chevronFrame}>
+            <View style={styles.vector1} />
+          </View>
+        </TouchableOpacity>
 
-        {/* Title block */}
-        <View style={styles.titleBlock}>
-          <Text style={styles.title}>What you wanna do?</Text>
-          <Text style={styles.subtitle}>
-            Choose your main objective. You can always do more later.
-          </Text>
-        </View>
-
-        {/* Option cards */}
-        <View style={styles.optionsList}>
-          {OPTIONS.map((option) => {
-            const isSelected = selected === option.id;
-            return (
-              <TouchableOpacity
-                key={option.id}
-                style={[styles.optionCard, isSelected && styles.optionCardSelected]}
-                onPress={() => setSelected(option.id)}
-                activeOpacity={0.8}
-              >
-                {/* Icon container */}
-                <View style={styles.iconContainer}>
-                  <Feather
-                    name={option.icon}
-                    size={20}
-                    color="#0D0D0D"
-                  />
-                </View>
-
-                {/* Label */}
-                <Text style={styles.optionLabel}>{option.label}</Text>
-
-                {/* Radio button */}
-                <View style={[styles.radio, isSelected && styles.radioSelected]}>
-                  {isSelected && <View style={styles.radioDot} />}
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+        {/* Navigation texts */}
+        <View style={styles.navTexts}>
+          <Text style={styles.stepIndicator}>Step 2 of 3</Text>
+          <Text style={styles.skipText}>Skip</Text>
         </View>
 
       </View>
 
-      {/* Continue button pinned to bottom */}
-      <View style={styles.footer}>
-        <Button
-          label="Continue"
-          onPress={() => navigation.navigate('LocationPermission')}
-          variant="primary"
-          style={{ alignItems: 'center' }}
-        />
-      </View>
-
-    </ScreenWrapper>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
+  root: {
     flex: 1,
-    paddingHorizontal: 29,
-    paddingTop: 32,
-    gap: 24,
+    backgroundColor: '#FFFFFF',
   },
-  titleBlock: {
-    gap: 6,
+  mainContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    gap: 32,
   },
-  title: {
-    fontFamily: 'Inter_18pt-SemiBold',
-    fontSize: 28,
-    lineHeight: 34,
-    letterSpacing: -0.5,
-    color: '#0D0D0D',
-  },
-  subtitle: {
-    fontFamily: 'Inter_18pt-Regular',
-    fontSize: 15,
-    lineHeight: 22,
-    letterSpacing: -0.32,
-    color: '#0D0D0D',
-    opacity: 0.5,
-  },
-  optionsList: {
-    gap: 10,
-  },
-  optionCard: {
+
+  /* Navigation */
+  navigation: {
     width: '100%',
-    height: 64,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 14,
     paddingHorizontal: 16,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    paddingBottom: 16,
+    gap: 12,
+},
+
+  /* Back button */
+  backButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 9999,
     borderWidth: 1.5,
-    borderColor: 'transparent',
-  },
-  optionCardSelected: {
-    borderColor: '#0039FF',
-  },
-  iconContainer: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    backgroundColor: 'rgba(13,13,13,0.06)',
+    borderColor: '#000000',
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  optionLabel: {
+  chevronFrame: {
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  vector1: {
+    position: 'absolute',
+    width: 6.25,
+    height: 12.5,
+    top: 3.75,
+    left: 6.25,
+    borderLeftWidth: 1.5,
+    borderBottomWidth: 1.5,
+    borderColor: '#000000',
+    transform: [{ rotate: '45deg' }],
+  },
+
+  /* Navigation texts */
+  navTexts: {
     flex: 1,
+    height: 19,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  stepIndicator: {
+    width: 81,
+    height: 19,
     fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
-    color: '#0D0D0D',
+    lineHeight: 16,
     letterSpacing: -0.32,
+    textAlignVertical: 'center',
   },
-  radio: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1.5,
-    borderColor: 'rgba(13,13,13,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  radioSelected: {
-    borderColor: '#0039FF',
-    backgroundColor: '#0039FF',
-  },
-  radioDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#FFFFFF',
-  },
-  footer: {
-    paddingHorizontal: 29,
-    paddingBottom: 8,
+  skipText: {
+    width: 33,
+    height: 19,
+    fontFamily: 'Inter_18pt-Medium',
+    fontSize: 16,
+    lineHeight: 16,
+    letterSpacing: -0.32,
+    textAlign: 'center',
   },
 });
