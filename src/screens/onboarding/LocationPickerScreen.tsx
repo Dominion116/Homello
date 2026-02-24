@@ -48,31 +48,33 @@ export default function LocationPermission({ navigation }: any) {
         <View style={styles.topSection}>
           <Text style={styles.title}>Where would you like to live?</Text>
 
-          {/* Search/input Container */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputText}>Select a location i.e New York</Text>
-            <TouchableOpacity style={styles.iconContainer} activeOpacity={0.8}>
-              <Feather name="crosshair" size={20} color="#FFFFFF" />
-            </TouchableOpacity>
-          </View>
-
-          {/* Location List */}
-          <View style={styles.locationList}>
-            {locations.map((loc, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.locationItem}
-                activeOpacity={0.7}
-              >
-                <Feather name="map-pin" size={20} color="#000000" />
-                <Text style={styles.locationText}>{loc}</Text>
-                <Feather
-                  name="chevron-right"
-                  size={20}
-                  color="rgba(0,0,0,0.4)"
-                />
+          <View style={styles.listWrapper}>
+            {/* Search/input Container */}
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputText}>Select a location i.e New York</Text>
+              <TouchableOpacity style={styles.iconContainer} activeOpacity={0.8}>
+                <Feather name="crosshair" size={20} color="#FFFFFF" />
               </TouchableOpacity>
-            ))}
+            </View>
+
+            {/* Location List */}
+            <View style={styles.locationList}>
+              {locations.map((loc, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.locationItem}
+                  activeOpacity={0.7}
+                >
+                  <Feather name="map-pin" size={20} color="#000000" />
+                  <Text style={styles.locationText}>{loc}</Text>
+                  <Feather
+                    name="chevron-right"
+                    size={20}
+                    color="rgba(0,0,0,0.4)"
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
 
@@ -83,7 +85,8 @@ export default function LocationPermission({ navigation }: any) {
             style={styles.bottomImage}
           />
           <LinearGradient
-            colors={['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0)']}
+            colors={['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0)']}
+            locations={[0, 0.3, 1]}
             style={styles.insetShadow}
           />
         </View>
@@ -149,6 +152,9 @@ const styles = StyleSheet.create({
     lineHeight: 48,
     letterSpacing: -0.32,
     color: '#000000',
+  },
+  listWrapper: {
+    gap: 8,
   },
   inputContainer: {
     height: 60,
@@ -217,6 +223,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 58, // Approximation of 24px offset + 34px blur
+    height: 100, // Increased to fully mask the top border
   },
 });
