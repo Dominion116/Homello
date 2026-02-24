@@ -8,7 +8,12 @@ import { sendOtpEmail } from '../services/email';
 import { requireAuth, AuthRequest } from '../middleware/auth';
 
 const router = Router();
-const prisma = new PrismaClient();
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 // --- Helpers ---
 function generateOtp(): string {
@@ -20,7 +25,11 @@ function hashCode(code: string): string {
 }
 
 function issueJwt(userId: string): string {
-  return jwt.sign({ sub: userId }, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN });
+  return jwt.sign(
+    { sub: userId },
+    env.JWT_SECRET as string,
+    { expiresIn: env.JWT_EXPIRES_IN as any }
+  );
 }
 
 // --- POST /auth/signup ---

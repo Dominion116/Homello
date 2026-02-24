@@ -45,3 +45,15 @@ yarn-error.*
 .env.*
 !.env.example
 
+# Backend - Node/Prisma
+backend/node_modules/
+backend/dist/
+
+# Backend Prisma local databases (if using SQLite locally)
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# Backend env files
+backend/.env
+backend/.env.*
+
