@@ -101,13 +101,13 @@ export default function PreferenceScreen({ navigation }: any) {
                       <View style={styles.propertyInner}>
                         <Image
                           source={require('../../../assets/images/singlefamily.png')}
-                          style={{ width: 64, height: 64 }}
+                          style={styles.propertyImage}
                           resizeMode="contain"
                         />
                         <Text
                           style={[
                             styles.propertyText,
-                            selected && { opacity: 1, color: '#0039FF' },
+                            selected && styles.propertyTextSelected,
                           ]}
                         >
                           {type}
@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
   stepIndicator: {
     fontFamily: 'Inter_18pt-Medium',
     fontSize: 18,
-    letterSpacing: -0.32,
   },
   skipText: {
     fontFamily: 'Inter_18pt-Medium',
@@ -195,7 +194,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
-    letterSpacing: -0.32,
     color: '#000',
   },
 
@@ -233,16 +231,22 @@ const styles = StyleSheet.create({
   },
 
   propertySelected: {
-    borderColor: '#0039FF',
-    backgroundColor: '#F5F8FF',
+    backgroundColor: '#000000',
+    borderWidth: 0,
   },
 
   propertyInner: {
     width: 139.5,
     height: 74,
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
+  },
+
+  propertyImage: {
+    width: 100,
+    height: 55,
   },
 
   propertyText: {
@@ -251,6 +255,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     opacity: 0.6,
     color: '#000',
+  },
+
+  propertyTextSelected: {
+    color: '#FFFFFF',
+    opacity: 1,
   },
 
   /* ===== FIXED BOTTOM ===== */
@@ -274,7 +283,6 @@ const styles = StyleSheet.create({
   continueText: {
     fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
-    letterSpacing: -0.32,
     color: '#FFFFFF',
   },
 });
