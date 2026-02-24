@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
 
 export default function GoalScreen({ navigation }: any) {
   const insets = useSafeAreaInsets();
@@ -14,9 +15,7 @@ export default function GoalScreen({ navigation }: any) {
 
         {/* Back button */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} activeOpacity={0.7}>
-          <View style={styles.chevronFrame}>
-            <View style={styles.vector1} />
-          </View>
+          <Feather name="chevron-left" size={20} color="#0D0D0D" />
         </TouchableOpacity>
 
         {/* Navigation texts */}
@@ -50,36 +49,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 16,
     gap: 12,
-},
+  },
 
   /* Back button */
   backButton: {
     width: 48,
     height: 48,
     borderRadius: 9999,
-    borderWidth: 1.5,
-    borderColor: '#000000',
-    padding: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  chevronFrame: {
-    width: 20,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  
-  },
-  vector1: {
-    position: 'absolute',
-    width: 6.25,
-    height: 12.5,
-    top: 3.75,
-    left: 6.25,
-    borderLeftWidth: 1.5,
-    borderBottomWidth: 1.5,
-    borderColor: '#0D0D0D',
-    transform: [{ rotate: '45deg' }],
   },
 
   /* Navigation texts */
