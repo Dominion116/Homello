@@ -127,7 +127,7 @@ export default function PreferenceScreen({ navigation }: any) {
       >
         <TouchableOpacity
           style={styles.continueButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('LocationPicker')}
           activeOpacity={0.9}
         >
           <Text style={styles.continueText}>Continue</Text>

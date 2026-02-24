@@ -7,6 +7,7 @@ import CreateAccountScreen from '../screens/onboarding/CreateAccountScreen';
 import EnterOTPScreen from '../screens/onboarding/EnterOTPScreen';
 import GoalScreen from '../screens/onboarding/GoalScreen';
 import PreferencesScreen from '../screens/onboarding/PreferencesScreen';
+import LocationPickerScreen from '../screens/onboarding/LocationPickerScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function OnboardingNavigator() {
       <Stack.Screen name="EnterOTP" component={EnterOTPScreen} />
       <Stack.Screen name="Goal" component={GoalScreen} />
       <Stack.Screen name="Preferences" component={PreferencesScreen} />
+      <Stack.Screen name="LocationPicker" component={LocationPickerScreen}/>
     </Stack.Navigator>
   );
 }
