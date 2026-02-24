@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   disclaimer: {
     width: '100%',
-    maxWidth: 320,
+    maxWidth: 300,
     alignSelf: 'center',
     fontFamily: 'Inter_18pt-Regular',
     fontSize: Platform.OS === 'android' ? 14 : 16,
