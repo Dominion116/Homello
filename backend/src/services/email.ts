@@ -1,0 +1,23 @@
+import nodemailer from 'nodemailer';
+import { env } from '../config/env';
+
+const transporter = nodemailer.createTransport({
+  host: env.SMTP_HOST,
+  port: env.SMTP_PORT,
+  auth: { user: env.SMTP_USER, pass: env.SMTP_PASS },
+});
+
+export async function sendOtpEmail(to: string, code: string, purpose: string) {
+  const subject =
+    purpose === 'signup_verification' ? 'Verify your email' :
+    purpose === 'password_reset'      ? 'Reset your password' :
+                                        'Your login code';
+
+  await transporter.sendMail({
+    from: env.FROM_EMAIL,
+    to,
+    subject,
+    text: `Your code is: ${code}. It expires in 15 minutes.`,
+    html: `<p>Your code is: <strong>${code}</strong>. It expires in 15 minutes.</p>`,
+  });
+}
