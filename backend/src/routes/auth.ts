@@ -2,7 +2,13 @@ import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { PrismaClient, OtpPurpose } from '@prisma/client';
+import { PrismaClient} from '@prisma/client';
+const OtpPurpose = {
+  signup_verification: 'signup_verification',
+  login: 'login',
+  password_reset: 'password_reset',
+} as const;
+type OtpPurpose = typeof OtpPurpose[keyof typeof OtpPurpose];
 import { env } from '../config/env';
 import { sendOtpEmail } from '../services/email';
 import { requireAuth, AuthRequest } from '../middleware/auth';
