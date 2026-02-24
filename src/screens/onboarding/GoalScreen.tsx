@@ -3,33 +3,26 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
   StyleSheet,
-  ScrollView,
+  StatusBar,
   Image,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 
-export default function PreferenceScreen({ navigation }: any) {
-  const insets = useSafeAreaInsets();
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+type GoalOption = 'buy' | 'sell' | 'looking';
 
-  const propertyTypes = [
-    'Single Family',
-    'Condo',
-    'Townhouse',
-    'Multi-Family',
-    'Villa',
-    'Apartment',
-  ];
+export default function GoalScreen({ navigation }: any) {
+  const insets = useSafeAreaInsets();
+  const [selected, setSelected] = useState<GoalOption>('buy');
 
   return (
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
-      {/* ================= HEADER ================= */}
+      {/* Navigation */}
       <View style={[styles.navigation, { paddingTop: insets.top + 8 }]}>
+        {/* Back button */}
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
@@ -38,104 +31,104 @@ export default function PreferenceScreen({ navigation }: any) {
           <Feather name="chevron-left" size={20} color="#0D0D0D" />
         </TouchableOpacity>
 
+        {/* Navigation texts */}
         <View style={styles.navTexts}>
-          <Text style={styles.stepIndicator}>Step 3 of 3</Text>
-          <Text style={styles.skipText}>Skip</Text>
+          <Text style={styles.stepIndicator}>Step 2 of 3</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LocationPermission')}>
+            <Text style={styles.skipText}>Skip</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
-      {/* ================= SCROLLABLE CONTENT ================= */}
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          paddingTop: 140,
-          paddingRight: 20,
-          paddingBottom: 123,
-          paddingLeft: 20,
-          gap: 32,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Description */}
-        <Text style={styles.description}>
-          Tell us a little more about what you’re looking for.
-        </Text>
-
-        <View style={{ gap: 24 }}>
-          {/* ============ PRICE RANGE ============ */}
-          <View style={{ gap: 16 }}>
-            <Text style={styles.sectionTitle}>Price range</Text>
-
-            <View style={{ flexDirection: 'row', gap: 10 }}>
-              <TouchableOpacity style={styles.dropdownButton}>
-                <Text style={styles.dropdownText}>Minimum</Text>
-                <Feather name="chevron-down" size={18} color="#000" />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.dropdownButton}>
-                <Text style={styles.dropdownText}>Maximum</Text>
-                <Feather name="chevron-down" size={18} color="#000" />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* ============ PROPERTY TYPE ============ */}
-          <View style={{ gap: 16 }}>
-            <Text style={styles.sectionTitle}>Property type</Text>
-
-            {[0, 2, 4].map((index) => (
-              <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
-                {propertyTypes.slice(index, index + 2).map((type) => {
-                  const selected = selectedType === type;
-
-                  return (
-                    <TouchableOpacity
-                      key={type}
-                      style={[
-                        styles.propertyButton,
-                        selected && styles.propertySelected,
-                      ]}
-                      onPress={() => setSelectedType(type)}
-                      activeOpacity={0.85}
-                    >
-                      <View style={styles.propertyInner}>
-                        <Image
-                          source={require('../../../assets/images/singlefamily.png')}
-                          style={styles.propertyImage}
-                          resizeMode="contain"
-                        />
-                        <Text
-                          style={[
-                            styles.propertyText,
-                            selected && styles.propertyTextSelected,
-                          ]}
-                        >
-                          {type}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            ))}
-          </View>
+      {/* Main container */}
+      <View style={[styles.mainContainer, { paddingBottom: insets.bottom + 24 }]}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>What you wanna do?</Text>
+          <Text style={styles.subtitle}>
+            Choose your main objective. You can always do more later.
+          </Text>
         </View>
-      </ScrollView>
 
-      {/* ================= FIXED BOTTOM ================= */}
-      <View
-        style={[
-          styles.bottomContainer,
-          { paddingBottom: insets.bottom + 24 },
-        ]}
-      >
-        <TouchableOpacity
-          style={styles.continueButton}
-          onPress={() => navigation.navigate('Home')}
-          activeOpacity={0.9}
-        >
-          <Text style={styles.continueText}>Continue</Text>
-        </TouchableOpacity>
+        {/* Options container */}
+        <View style={styles.optionsContainer}>
+          {/* Buy a house */}
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selected === 'buy' && styles.optionButtonSelected,
+            ]}
+            onPress={() => setSelected('buy')}
+            activeOpacity={0.8}
+          >
+            <View style={styles.iconFrame}>
+              <Image
+                source={require('../../../assets/images/Frame001.png')}
+                style={styles.iconImage}
+                resizeMode="contain"
+              />
+            </View>
+            <Text style={styles.optionText}>Buy a house</Text>
+            <View style={[styles.radio, selected === 'buy' && styles.radioSelected]}>
+              {selected === 'buy' && <View style={styles.radioDot} />}
+            </View>
+          </TouchableOpacity>
+
+          {/* Sell a house */}
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selected === 'sell' && styles.optionButtonSelected,
+            ]}
+            onPress={() => setSelected('sell')}
+            activeOpacity={0.8}
+          >
+            <View style={styles.iconFrame}>
+              <Image
+                source={require('../../../assets/images/Frame002.png')}
+                style={styles.iconImage}
+                resizeMode="contain"
+              />
+            </View>
+            <Text style={styles.optionText}>Sell a house</Text>
+            <View style={[styles.radio, selected === 'sell' && styles.radioSelected]}>
+              {selected === 'sell' && <View style={styles.radioDot} />}
+            </View>
+          </TouchableOpacity>
+
+          {/* Just looking */}
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selected === 'looking' && styles.optionButtonSelected,
+            ]}
+            onPress={() => setSelected('looking')}
+            activeOpacity={0.8}
+          >
+            <View style={styles.iconFrame}>
+              <Image
+                source={require('../../../assets/images/Frame003.png')}
+                style={styles.iconImage}
+                resizeMode="contain"
+              />
+            </View>
+            <Text style={styles.optionText}>Just looking</Text>
+            <View style={[styles.radio, selected === 'looking' && styles.radioSelected]}>
+              {selected === 'looking' && <View style={styles.radioDot} />}
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        {/* Continue button */}
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={() => navigation.navigate('LocationPermission')}
+            activeOpacity={0.9}
+          >
+            <Text style={styles.continueText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -146,8 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-
-  /* ===== HEADER ===== */
+  /* Navigation */
   navigation: {
     width: '100%',
     flexDirection: 'row',
@@ -157,9 +149,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 9999,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
     alignItems: 'center',
@@ -173,113 +165,110 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontFamily: 'Inter_18pt-Medium',
-    fontSize: 18,
+    fontSize: 16,
+    color: '#0D0D0D',
   },
   skipText: {
     fontFamily: 'Inter_18pt-Medium',
-    fontSize: 18,
+    fontSize: 16,
     color: '#0039FF',
   },
-
-  /* ===== DESCRIPTION ===== */
-  description: {
-    width: 353,
+  /* Main container */
+  mainContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 20,
+  },
+  /* Header */
+  header: {
+    marginBottom: 32,
+  },
+  title: {
     fontFamily: 'Inter_28pt-semibold',
     fontSize: 32,
-    lineHeight: 38,
-    letterSpacing: -0.32,
-    color: '#000',
+    lineHeight: 40,
+    color: '#000000',
+    marginBottom: 8,
   },
-
-  sectionTitle: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 16,
-    color: '#000',
-  },
-
-  /* ===== PRICE BUTTONS ===== */
-  dropdownButton: {
-    width: 171.5,
-    height: 60,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#0000001A',
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
-  },
-
-  dropdownText: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 16,
-  },
-
-  /* ===== PROPERTY ===== */
-  propertyButton: {
-    width: 171.5,
-    height: 136,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#0000001A',
-    paddingTop: 16,
-    paddingRight: 16,
-    paddingBottom: 4,
-    paddingLeft: 16,
-    backgroundColor: '#FFFFFF',
-  },
-
-  propertySelected: {
-    backgroundColor: '#000000',
-    borderWidth: 0,
-  },
-
-  propertyInner: {
-    width: 139.5,
-    height: 74,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-  },
-
-  propertyImage: {
-    width: 100,
-    height: 55,
-  },
-
-  propertyText: {
+  subtitle: {
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
-    textAlign: 'center',
-    opacity: 0.6,
-    color: '#000',
+    lineHeight: 24,
+    color: '#666666',
   },
-
-  propertyTextSelected: {
-    color: '#FFFFFF',
-    opacity: 1,
+  /* Options container */
+  optionsContainer: {
+    gap: 12,
   },
-
-  /* ===== FIXED BOTTOM ===== */
-  bottomContainer: {
+  optionButton: {
     width: '100%',
-    height: 121,
-    paddingHorizontal: 24,
-    justifyContent: 'flex-end',
+    height: 80,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: '#F2F2F2',
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
   },
-
+  optionButtonSelected: {
+    borderColor: '#0039FF',
+    backgroundColor: '#F7F9FF',
+  },
+  iconFrame: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#F8F8F8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  iconImage: {
+    width: 32,
+    height: 32,
+  },
+  optionText: {
+    flex: 1,
+    fontFamily: 'Inter_18pt-Medium',
+    fontSize: 16,
+    color: '#000000',
+  },
+  radio: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#E0E0E0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  radioSelected: {
+    borderColor: '#0039FF',
+  },
+  radioDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#0039FF',
+  },
+  footer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   continueButton: {
     width: '100%',
-    height: 60,
-    borderRadius: 20,
+    height: 56,
+    borderRadius: 16,
     backgroundColor: '#0039FF',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#0039FF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
-
   continueText: {
     fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
