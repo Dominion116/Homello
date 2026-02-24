@@ -9,15 +9,19 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Modal,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
+import Button from '../../components/Button';
 
 export default function LocationPermission({ navigation }: any) {
   const insets = useSafeAreaInsets();
   const [isFocused, setIsFocused] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [showModal, setShowModal] = useState(true);
 
   const locations = [
     'New York, NY',
@@ -112,6 +116,53 @@ export default function LocationPermission({ navigation }: any) {
         </View>
         </View>
       </KeyboardAvoidingView>
+
+      {/* ================= MODAL OVERLAY ================= */}
+      <Modal visible={showModal} transparent={true} animationType="fade">
+        <BlurView
+          intensity={11}
+          tint="dark"
+          style={styles.modalOverlay}
+        >
+          <View style={[styles.modalSheet, { paddingBottom: insets.bottom + 20 }]}>
+            {/* Home indicator */}
+            <View style={styles.homeIndicator} />
+
+            <View style={styles.modalInnerContent}>
+              <View style={styles.modalHeaderSec}>
+                <Text style={styles.modalTitleSpec}>Grant Permission</Text>
+
+                <View style={styles.modalBody}>
+                  <View style={styles.modalTextContainer}>
+                    <Text style={styles.modalEnableLocation}>Enable Location</Text>
+                    <Text style={styles.modalDescText}>
+                      Create a new account to get started exploring properties with ease
+                    </Text>
+                  </View>
+
+                  <Image
+                    source={require('../../../assets/images/locationimage.png')}
+                    style={styles.modalImage}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.modalFooter}>
+                <Button
+                  label="Allow location permission"
+                  variant="primary"
+                  onPress={() => setShowModal(false)}
+                />
+                <Button
+                  label="Skip"
+                  variant="secondary"
+                  onPress={() => setShowModal(false)}
+                />
+              </View>
+            </View>
+          </View>
+        </BlurView>
+      </Modal>
     </View>
   );
 }
@@ -248,5 +299,77 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 100,
+  },
+
+  /* ===== MODAL ====== */
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    justifyContent: 'flex-end',
+  },
+  modalSheet: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingTop: 10,
+    alignItems: 'center',
+  },
+  homeIndicator: {
+    width: 44,
+    height: 4,
+    borderRadius: 100,
+    backgroundColor: 'rgba(17, 17, 17, 0.1)',
+    marginBottom: 24,
+  },
+  modalInnerContent: {
+    width: 329,
+    gap: 16,
+  },
+  modalHeaderSec: {
+    width: 329,
+    gap: 16,
+  },
+  modalTitleSpec: {
+    fontFamily: 'Inter_18pt-Medium',
+    fontSize: 16,
+    lineHeight: 24,
+    letterSpacing: -0.32,
+    textAlign: 'center',
+    color: '#000000',
+  },
+  modalBody: {
+    width: 329,
+    gap: 14,
+  },
+  modalTextContainer: {
+    width: 329,
+    gap: 8,
+  },
+  modalEnableLocation: {
+    fontFamily: 'Inter_28pt-semibold',
+    fontSize: 35,
+    lineHeight: 40,
+    letterSpacing: -0.32,
+    textAlign: 'center',
+    color: '#000000',
+  },
+  modalDescText: {
+    fontFamily: 'Inter_18pt-Regular',
+    fontSize: 14,
+    lineHeight: 21,
+    letterSpacing: -0.28,
+    textAlign: 'center',
+    color: 'rgba(0,0,0,0.6)',
+  },
+  modalImage: {
+    width: 329,
+    height: 232.8,
+    resizeMode: 'contain',
+  },
+  modalFooter: {
+    width: 329,
+    gap: 10,
+    marginTop: 10,
   },
 });
