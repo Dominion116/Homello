@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     maxWidth: 335,
     fontFamily: 'Inter_18pt-SemiBold',
     fontSize: 45,
-    lineHeight: 45,
+    lineHeight: 55,
     letterSpacing: -1,
     textAlign: 'center',
     color: '#0D0D0D',
