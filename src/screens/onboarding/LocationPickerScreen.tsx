@@ -122,9 +122,9 @@ export default function LocationPermission({ navigation }: any) {
         <BlurView
           intensity={11}
           tint="dark"
-          style={styles.modalOverlay}
+          style={[styles.modalOverlay, { paddingBottom: insets.bottom > 0 ? insets.bottom : 24 }]}
         >
-          <View style={[styles.modalSheet, { paddingBottom: insets.bottom + 20 }]}>
+          <View style={styles.modalSheet}>
             {/* Home indicator */}
             <View style={styles.homeIndicator} />
 
@@ -308,13 +308,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     justifyContent: 'flex-end',
+    paddingHorizontal: 8,
   },
   modalSheet: {
     width: '100%',
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    borderRadius: 40,
     paddingTop: 10,
+    paddingBottom: 24,
     alignItems: 'center',
   },
   homeIndicator: {
