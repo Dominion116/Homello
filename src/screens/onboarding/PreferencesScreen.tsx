@@ -39,7 +39,7 @@ export default function PreferenceScreen({ navigation }: any) {
         </TouchableOpacity>
 
         <View style={styles.navTexts}>
-          <Text style={styles.stepIndicator}>Step 3 of 3</Text>
+          <Text style={styles.stepIndicator}>Step 2 of 3</Text>
           <Text style={styles.skipText}>Skip</Text>
         </View>
       </View>

@@ -33,7 +33,7 @@ export default function GoalScreen({ navigation }: any) {
 
         {/* Navigation texts */}
         <View style={styles.navTexts}>
-          <Text style={styles.stepIndicator}>Step 2 of 3</Text>
+          <Text style={styles.stepIndicator}>Step 1 of 3</Text>
           <TouchableOpacity onPress={() => navigation.navigate('LocationPermission')}>
             <Text style={styles.skipText}>Skip</Text>
           </TouchableOpacity>
