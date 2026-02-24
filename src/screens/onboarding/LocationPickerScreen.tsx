@@ -141,7 +141,7 @@ export default function LocationPermission({ navigation }: any) {
                   </View>
 
                   <Image
-                    source={require('../../../assets/images/locationimage.png')}
+                    source={require('../../../assets/images/ModalImage.png')}
                     style={styles.modalImage}
                   />
                 </View>
@@ -152,11 +152,13 @@ export default function LocationPermission({ navigation }: any) {
                   label="Allow location permission"
                   variant="primary"
                   onPress={() => setShowModal(false)}
+                  style={{alignItems: 'center'}}
                 />
                 <Button
                   label="Skip"
                   variant="secondary"
                   onPress={() => setShowModal(false)}
+                  style={{alignItems: 'center'}}
                 />
               </View>
             </View>
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter_28pt-semibold',
-    fontSize: 35,
+    fontSize: 40,
     lineHeight: 48,
     letterSpacing: -0.32,
     color: '#000000',
@@ -348,7 +350,7 @@ const styles = StyleSheet.create({
   },
   modalEnableLocation: {
     fontFamily: 'Inter_28pt-semibold',
-    fontSize: 35,
+    fontSize: 40,
     lineHeight: 40,
     letterSpacing: -0.32,
     textAlign: 'center',
@@ -356,7 +358,7 @@ const styles = StyleSheet.create({
   },
   modalDescText: {
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 21,
     letterSpacing: -0.28,
     textAlign: 'center',
