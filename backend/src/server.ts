@@ -4,8 +4,11 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { env } from './config/env';
 import authRoutes from './routes/auth';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger';
 
 const app = express();
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(helmet());
 app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:19006'] }));
