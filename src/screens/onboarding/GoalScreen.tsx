@@ -37,7 +37,7 @@ export default function GoalScreen({ navigation }: any) {
       </View>
 
       {/* Main container */}
-      <View style={styles.mainContainer}>
+      <View style={[styles.mainContainer, { paddingBottom: insets.bottom + 24 }]}>
 
         {/* Header */}
         <View style={styles.header}>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   skipText: {
     width: 33,
     height: 19,
-    fontFamily: 'Inter_18pt-SemiBold',
+    fontFamily: 'Inter_18pt-Medium',
     fontSize: 18,
     lineHeight: 18,
     letterSpacing: -0.32,
@@ -193,10 +193,10 @@ const styles = StyleSheet.create({
   title: {
     width: '100%',
     height: 39,
-    fontFamily: 'Inter_28pt-SemiBold',
-    fontSize: 32,
-    lineHeight: 32,
-    letterSpacing: -0.32,
+    fontFamily: 'Inter_28pt-semibold',
+    fontSize: 40,
+    lineHeight: 40,
+    letterSpacing: -0.35,
     color: '#000000',
     textAlignVertical: 'center',
   },
@@ -204,9 +204,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 42,
     fontFamily: 'Inter_18pt-Regular',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 21,
-    letterSpacing: -0.28,
+    letterSpacing: -0.32,
     color: '#000000',
     opacity: 0.6,
     textAlignVertical: 'center',
@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
   /* Options container */
   optionsContainer: {
     width: '100%',
-    
     gap: 10,
   },
   optionButton: {
@@ -237,14 +236,13 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 99,
-    backgroundColor: 'rgba(30,30,30,0.1)',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   iconImage: {
-    width: 24,
-    height: 24,
+    width: 44,
+    height: 44,
   },
   optionText: {
     flex: 1,
@@ -276,11 +274,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  /* Footer */
   footer: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingBottom: 16,
   },
   continueButton: {
     width: '100%',
