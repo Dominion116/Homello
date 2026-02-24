@@ -113,7 +113,7 @@ export default function GoalScreen({ navigation }: any) {
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.continueButton}
-            onPress={() => navigation.navigate('LocationPermission')}
+            onPress={() => navigation.navigate('Preferences')}
             activeOpacity={0.9}
           >
             <Text style={styles.continueText}>Continue</Text>
