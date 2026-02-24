@@ -218,14 +218,13 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#F8F8F8',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
   },
   iconImage: {
-    width: 32,
-    height: 32,
+    width: 40,
+    height: 40,
   },
   optionText: {
     flex: 1,

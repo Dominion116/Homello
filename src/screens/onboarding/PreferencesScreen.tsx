@@ -50,7 +50,7 @@ export default function PreferenceScreen({ navigation }: any) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 123 }}
       >
-        <View style={{ paddingTop: 32, paddingHorizontal: 24, gap: 32 }}>
+        <View style={{ paddingTop: 20, paddingHorizontal: 24, gap: 32 }}>
           {/* Description */}
           <Text style={styles.description}>
             Tell us a little more about what you’re looking for.
@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
   dropdownText: {
     fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
+    color: 'rgba(0, 0, 0, 1)',
   },
 
   /* ===== PROPERTY ===== */
