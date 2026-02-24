@@ -46,7 +46,8 @@ export default function TextInput({
 
 const styles = StyleSheet.create({
   container: {
-    width: 335,
+    width: '100%',
+    maxWidth: 335,
     height: 60,
     borderRadius: 20,
     borderWidth: 1,

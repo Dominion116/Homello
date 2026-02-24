@@ -55,11 +55,13 @@ export default function WelcomeScreen({ navigation }: any) {
               label="Sign In with Email"
               onPress={() => navigation.navigate('SignIn')}
               variant="primary"
+              style={{alignItems: 'flex-start'}}
             />
             <Button
               label="Create new account"
               onPress={() => navigation.navigate('CreateAccount')}
               variant="secondary"
+              style={{alignItems: 'flex-start'}}
             />
             <SocialButton
               label="Continue with Google"
