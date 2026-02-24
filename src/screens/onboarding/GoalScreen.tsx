@@ -123,7 +123,7 @@ export default function GoalScreen({ navigation }: any) {
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.continueButton}
-            onPress={() => navigation.navigate('LocationPermission')}
+            onPress={() => navigation.navigate('Preferences')}
             activeOpacity={0.9}
           >
             <Text style={styles.continueText}>Continue</Text>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter_28pt-semibold',
-    fontSize: 32,
+    fontSize: 35,
     lineHeight: 40,
     color: '#000000',
     marginBottom: 8,
@@ -212,8 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   optionButtonSelected: {
-    borderColor: '#0039FF',
-    backgroundColor: '#F7F9FF',
+    backgroundColor: '#FFFFFF',
   },
   iconFrame: {
     width: 48,

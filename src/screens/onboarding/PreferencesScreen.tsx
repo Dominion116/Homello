@@ -13,22 +13,22 @@ const PROPERTY_TYPES = [
   {
     id: 'single',
     label: 'Single Family',
-    image: require('../assets/property.png'),
+    image: require('../../../assets/images/singlefamily.png'),
   },
   {
     id: 'condo',
     label: 'Condo',
-    image: require('../assets/property.png'),
+    image: require('../../../assets/images/singlefamily.png'),
   },
   {
     id: 'townhouse',
     label: 'Townhouse',
-    image: require('../assets/property.png'),
+    image: require('../../../assets/images/singlefamily.png'),
   },
   {
     id: 'multi',
     label: 'Multi Family',
-    image: require('../assets/property.png'),
+    image: require('../../../assets/images/singlefamily.png'),
   },
 ];
 
