@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,9 @@ import {
   StyleSheet,
   StatusBar,
   Image,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
@@ -13,6 +16,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function LocationPermission({ navigation }: any) {
   const insets = useSafeAreaInsets();
+  const [isFocused, setIsFocused] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const locations = [
     'New York, NY',
@@ -44,21 +49,35 @@ export default function LocationPermission({ navigation }: any) {
       </View>
 
       {/* ================= SECOND CONTAINER ================= */}
-      <View style={styles.contentWrapper}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <View style={styles.contentWrapper}>
         <View style={styles.topSection}>
           <Text style={styles.title}>Where would you like to live?</Text>
 
           <View style={styles.listWrapper}>
             {/* Search/input Container */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputText}>Select a location i.e New York</Text>
+            <View style={[styles.inputContainer, isFocused && styles.inputContainerFocused]}>
+              <TextInput
+                style={[styles.inputText, { flex: 1 }]}
+                placeholder="Select a location i.e New York"
+                placeholderTextColor="rgba(0,0,0,0.6)"
+                value={searchText}
+                onChangeText={setSearchText}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                returnKeyType="done"
+              />
               <TouchableOpacity style={styles.iconContainer} activeOpacity={0.8}>
                 <Feather name="crosshair" size={20} color="#FFFFFF" />
               </TouchableOpacity>
             </View>
 
             {/* Location List */}
-            <View style={styles.locationList}>
+            {!isFocused && (
+              <View style={styles.locationList}>
               {locations.map((loc, index) => (
                 <TouchableOpacity
                   key={index}
@@ -75,6 +94,7 @@ export default function LocationPermission({ navigation }: any) {
                 </TouchableOpacity>
               ))}
             </View>
+            )}
           </View>
         </View>
 
@@ -90,7 +110,8 @@ export default function LocationPermission({ navigation }: any) {
             style={styles.insetShadow}
           />
         </View>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -167,6 +188,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 20,
     paddingRight: 10,
+  },
+  inputContainerFocused: {
+    borderColor: '#0039FF',
   },
   inputText: {
     fontFamily: 'Inter_18pt-Regular',
