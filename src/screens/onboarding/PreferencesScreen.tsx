@@ -2,287 +2,214 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  StatusBar,
   StyleSheet,
+  TouchableOpacity,
   ScrollView,
+  SafeAreaView,
   Image,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
 
-export default function PreferenceScreen({ navigation }: any) {
-  const insets = useSafeAreaInsets();
+const PROPERTY_TYPES = [
+  {
+    id: 'single',
+    label: 'Single Family',
+    image: require('../assets/property.png'),
+  },
+  {
+    id: 'condo',
+    label: 'Condo',
+    image: require('../assets/property.png'),
+  },
+  {
+    id: 'townhouse',
+    label: 'Townhouse',
+    image: require('../assets/property.png'),
+  },
+  {
+    id: 'multi',
+    label: 'Multi Family',
+    image: require('../assets/property.png'),
+  },
+];
+
+const GoalsScreen = () => {
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
-  const propertyTypes = [
-    'Single Family',
-    'Condo',
-    'Townhouse',
-    'Multi-Family',
-    'Villa',
-    'Apartment',
-  ];
-
   return (
-    <View style={styles.root}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-
-      {/* ================= HEADER ================= */}
-      <View style={[styles.navigation, { paddingTop: insets.top + 8 }]}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-          activeOpacity={0.7}
+    <SafeAreaView style={styles.root}>
+      <View style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
         >
-          <Feather name="chevron-left" size={20} color="#0D0D0D" />
-        </TouchableOpacity>
+          <Text style={styles.title}>
+            Tell us a little more about what you’re looking for.
+          </Text>
 
-        <View style={styles.navTexts}>
-          <Text style={styles.stepIndicator}>Step 3 of 3</Text>
-          <Text style={styles.skipText}>Skip</Text>
-        </View>
-      </View>
+          <Text style={styles.sectionTitle}>Price range</Text>
 
-      {/* ================= SCROLLABLE CONTENT ================= */}
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          paddingTop: 140,
-          paddingRight: 20,
-          paddingBottom: 123,
-          paddingLeft: 20,
-          gap: 32,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Description */}
-        <Text style={styles.description}>
-          Tell us a little more about what you’re looking for.
-        </Text>
-
-        <View style={{ gap: 24 }}>
-          {/* ============ PRICE RANGE ============ */}
-          <View style={{ gap: 16 }}>
-            <Text style={styles.sectionTitle}>Price range</Text>
-
-            <View style={{ flexDirection: 'row', gap: 10 }}>
-              <TouchableOpacity style={styles.dropdownButton}>
-                <Text style={styles.dropdownText}>Minimum</Text>
-                <Feather name="chevron-down" size={18} color="#000" />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.dropdownButton}>
-                <Text style={styles.dropdownText}>Maximum</Text>
-                <Feather name="chevron-down" size={18} color="#000" />
-              </TouchableOpacity>
+          <View style={styles.priceRow}>
+            <View style={styles.dropdown}>
+              <Text style={styles.dropdownText}>Minimum</Text>
+            </View>
+            <View style={styles.dropdown}>
+              <Text style={styles.dropdownText}>Maximum</Text>
             </View>
           </View>
 
-          {/* ============ PROPERTY TYPE ============ */}
-          <View style={{ gap: 16 }}>
-            <Text style={styles.sectionTitle}>Property type</Text>
+          <Text style={styles.sectionTitle}>Property type</Text>
 
-            {[0, 2, 4].map((index) => (
-              <View key={index} style={{ flexDirection: 'row', gap: 10 }}>
-                {propertyTypes.slice(index, index + 2).map((type) => {
-                  const selected = selectedType === type;
+          <View style={styles.grid}>
+            {PROPERTY_TYPES.map((item) => {
+              const isSelected = selectedType === item.id;
 
-                  return (
-                    <TouchableOpacity
-                      key={type}
-                      style={[
-                        styles.propertyButton,
-                        selected && styles.propertySelected,
-                      ]}
-                      onPress={() => setSelectedType(type)}
-                      activeOpacity={0.85}
-                    >
-                      <View style={styles.propertyInner}>
-                        <Image
-                          source={require('../../../assets/images/singlefamily.png')}
-                          style={styles.propertyImage}
-                          resizeMode="contain"
-                        />
-                        <Text
-                          style={[
-                            styles.propertyText,
-                            selected && styles.propertyTextSelected,
-                          ]}
-                        >
-                          {type}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            ))}
+              return (
+                <TouchableOpacity
+                  key={item.id}
+                  activeOpacity={0.8}
+                  onPress={() => setSelectedType(item.id)}
+                  style={[
+                    styles.propertyCard,
+                    isSelected && styles.propertyCardSelected,
+                  ]}
+                >
+                  <Image
+                    source={item.image}
+                    style={styles.propertyImage}
+                    resizeMode="contain"
+                  />
+
+                  <Text
+                    style={[
+                      styles.propertyText,
+                      isSelected && styles.propertyTextSelected,
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
 
-      {/* ================= FIXED BOTTOM ================= */}
-      <View
-        style={[
-          styles.bottomContainer,
-          { paddingBottom: insets.bottom + 24 },
-        ]}
-      >
-        <TouchableOpacity
-          style={styles.continueButton}
-          onPress={() => navigation.navigate('Home')}
-          activeOpacity={0.9}
-        >
+        <TouchableOpacity style={styles.continueButton}>
           <Text style={styles.continueText}>Continue</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
-}
+};
+
+export default GoalsScreen;
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F4F4F4',
   },
 
-  /* ===== HEADER ===== */
-  navigation: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    gap: 12,
-  },
-  backButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 9999,
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  navTexts: {
+  container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  stepIndicator: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 18,
-  },
-  skipText: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 18,
-    color: '#0039FF',
   },
 
-  /* ===== DESCRIPTION ===== */
-  description: {
-    width: 353,
-    fontFamily: 'Inter_28pt-semibold',
-    fontSize: 32,
-    lineHeight: 38,
-    letterSpacing: -0.32,
-    color: '#000',
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 120,
+  },
+
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    marginTop: 30,
+    marginBottom: 30,
+    lineHeight: 36,
   },
 
   sectionTitle: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 16,
-    color: '#000',
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 15,
   },
 
-  /* ===== PRICE BUTTONS ===== */
-  dropdownButton: {
-    width: 171.5,
+  priceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+  },
+
+  dropdown: {
+    width: '48%',
     height: 60,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#0000001A',
+    borderColor: '#E5E5E5',
+    justifyContent: 'center',
     paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFF',
   },
 
   dropdownText: {
-    fontFamily: 'Inter_18pt-Medium',
     fontSize: 16,
+    color: '#888',
   },
 
-  /* ===== PROPERTY ===== */
-  propertyButton: {
-    width: 171.5,
-    height: 136,
-    borderRadius: 20,
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+
+  propertyCard: {
+    width: '48%',
+    height: 160,
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: '#0000001A',
-    paddingTop: 16,
-    paddingRight: 16,
-    paddingBottom: 4,
-    paddingLeft: 16,
-    backgroundColor: '#FFFFFF',
-  },
-
-  propertySelected: {
-    backgroundColor: '#000000',
-    borderWidth: 0,
-  },
-
-  propertyInner: {
-    width: 139.5,
-    height: 74,
-    borderRadius: 4,
+    borderColor: '#E5E5E5',
+    backgroundColor: '#FFF',
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
+    padding: 16,
+  },
+
+  propertyCardSelected: {
+    backgroundColor: '#000',
+    borderWidth: 0,
   },
 
   propertyImage: {
     width: 100,
-    height: 55,
+    height: 70,
+    marginBottom: 12,
   },
 
   propertyText: {
-    fontFamily: 'Inter_18pt-Regular',
     fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
     textAlign: 'center',
-    opacity: 0.6,
-    color: '#000',
   },
 
   propertyTextSelected: {
-    color: '#FFFFFF',
-    opacity: 1,
-  },
-
-  /* ===== FIXED BOTTOM ===== */
-  bottomContainer: {
-    width: '100%',
-    height: 121,
-    paddingHorizontal: 24,
-    justifyContent: 'flex-end',
-    backgroundColor: '#FFFFFF',
+    color: '#FFF',
   },
 
   continueButton: {
-    width: '100%',
+    position: 'absolute',
+    bottom: 30,
+    left: 20,
+    right: 20,
     height: 60,
-    borderRadius: 20,
-    backgroundColor: '#0039FF',
+    borderRadius: 30,
+    backgroundColor: '#1A4DFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   continueText: {
-    fontFamily: 'Inter_18pt-Medium',
-    fontSize: 16,
-    color: '#FFFFFF',
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
