@@ -16,7 +16,7 @@ import { useAuth } from '../../context/AuthContext';
 
 export default function EnterOTPScreen({ navigation, route }: any) {
   const insets = useSafeAreaInsets();
-  const [otp, setOtp] = useState(['', '', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const inputs = useRef<Array<TextInput | null>>([]);
   const { completeSignupWithOtp } = useAuth();
   const email = route?.params?.email as string | undefined;
