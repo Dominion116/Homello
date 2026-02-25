@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_BASE_URL } from '../config/api';
 
 type User = {
@@ -13,7 +14,7 @@ type AuthContextValue = {
   token: string | null;
   initializing: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signOut: () => void;
+  signOut: () => Promise<void>;
   completeSignupWithOtp: (email: string, code: string) => Promise<void>;
 };
 
@@ -24,10 +25,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [initializing, setInitializing] = useState(true);
 
+  // Restore session on app launch
   useEffect(() => {
-    // For now, there is no persisted session. Mark as ready immediately.
-    setInitializing(false);
+    const restore = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('token');
+        const storedUser = await AsyncStorage.getItem('user');
+        if (storedToken && storedUser) {
+          setToken(storedToken);
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (e) {
+        console.error('Failed to restore session', e);
+      } finally {
+        setInitializing(false);
+      }
+    };
+    restore();
   }, []);
+
+  const saveSession = async (token: string, user: User) => {
+    await AsyncStorage.setItem('token', token);
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+    setToken(token);
+    setUser(user);
+  };
 
   const signIn = async (email: string, password: string) => {
     const res = await fetch(`${API_BASE_URL}/auth/signin`, {
@@ -36,11 +58,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || 'Sign in failed');
-    }
-    setToken(data.token);
-    setUser(data.user);
+    if (!res.ok) throw new Error(data.error || 'Sign in failed');
+    await saveSession(data.token, data.user);
   };
 
   const completeSignupWithOtp = async (email: string, code: string) => {
@@ -50,29 +69,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ email, code }),
     });
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || 'Verification failed');
-    }
-    setToken(data.token);
-    setUser(data.user);
+    if (!res.ok) throw new Error(data.error || 'Verification failed');
+    await saveSession(data.token, data.user);
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('user');
     setToken(null);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        token,
-        initializing,
-        signIn,
-        signOut,
-        completeSignupWithOtp,
-      }}
-    >
+    <AuthContext.Provider value={{ user, token, initializing, signIn, signOut, completeSignupWithOtp }}>
       {children}
     </AuthContext.Provider>
   );
@@ -80,9 +89,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!ctx) throw new Error('useAuth must be used within an AuthProvider');
   return ctx;
 }
-
