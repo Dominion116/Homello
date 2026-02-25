@@ -23,6 +23,12 @@
     "web": {},
     "plugins": [
       "expo-asset"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0c481876-6831-4db2-961d-aa3be613379d"
+      }
+    },
+    "owner": "dominionli"
   }
 }
