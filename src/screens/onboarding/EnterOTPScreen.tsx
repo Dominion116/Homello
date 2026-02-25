@@ -96,7 +96,7 @@ export default function EnterOTPScreen({ navigation, route }: any) {
             <Text style={styles.title}>Enter OTP</Text>
             <Text style={styles.subtitle}>
               We have sent you an otp for verification on your email address{' '}
-              <Text style={styles.subtitleBold}>example@mapldesign.co</Text>
+              <Text style={styles.subtitleBold}>{email}</Text>
             </Text>
           </View>
         </View>
