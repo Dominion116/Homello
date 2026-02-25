@@ -9,6 +9,8 @@ import { swaggerSpec } from './swagger';
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 // Core middleware
 app.use(helmet({
   contentSecurityPolicy: false, // needed for Swagger UI to load properly
