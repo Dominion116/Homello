@@ -41,8 +41,6 @@ yarn-error.*
 /android
 
 # Env variables
-.env
-.env.*
 !.env.example
 
 # Backend - Node/Prisma
@@ -57,3 +55,4 @@ backend/prisma/*.db-journal
 backend/.env
 backend/.env.*
 
+config.bat
