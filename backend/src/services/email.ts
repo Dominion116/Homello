@@ -1,14 +1,10 @@
-import nodemailer from 'nodemailer';
-import { env } from '../config/env';
+import * as Brevo from '@getbrevo/brevo';
 
-const transporter = nodemailer.createTransport({
-  host: env.SMTP_HOST,
-  port: env.SMTP_PORT,
-  secure: false,
-  auth: { user: env.SMTP_USER, pass: env.SMTP_PASS },
-  debug: true,  // 👈 log all SMTP communication
-  logger: true, // 👈 log to console
-});
+const apiInstance = new Brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY!
+);
 
 export async function sendOtpEmail(to: string, code: string, purpose: string) {
   const subject =
@@ -16,17 +12,18 @@ export async function sendOtpEmail(to: string, code: string, purpose: string) {
     purpose === 'password_reset'      ? 'Reset your password' :
                                         'Your login code';
 
+  const sendSmtpEmail = new Brevo.SendSmtpEmail();
+  sendSmtpEmail.to = [{ email: to }];
+  sendSmtpEmail.sender = { email: process.env.FROM_EMAIL!, name: 'Homello' };
+  sendSmtpEmail.subject = subject;
+  sendSmtpEmail.htmlContent = `<p>Your code is: <strong>${code}</strong>. It expires in 15 minutes.</p>`;
+  sendSmtpEmail.textContent = `Your code is: ${code}. It expires in 15 minutes.`;
+
   try {
-    const info = await transporter.sendMail({
-      from: env.FROM_EMAIL,
-      to,
-      subject,
-      text: `Your code is: ${code}. It expires in 15 minutes.`,
-      html: `<p>Your code is: <strong>${code}</strong>. It expires in 15 minutes.</p>`,
-    });
-    console.log('✅ Email sent:', info.messageId, 'Response:', info.response);
+    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log('✅ Email sent:', result.body);
   } catch (err) {
-    console.error('❌ Email send failed:', err);
-    throw err; // 👈 this will now cause a 500 and show in logs
+    console.error('❌ Email failed:', err);
+    throw err;
   }
 }
