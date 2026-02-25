@@ -1,5 +1,4 @@
-// src/screens/onboarding/EnterOTPScreen.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -22,12 +21,28 @@ export default function EnterOTPScreen({ navigation, route }: any) {
   const email = route?.params?.email as string | undefined;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [countdown, setCountdown] = useState(119);
+  const [resendSuccess, setResendSuccess] = useState(false);
+
+  // Countdown timer
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const timer = setTimeout(() => setCountdown(c => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
 
   const handleChange = (text: string, index: number) => {
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
-    if (text && index < 4) {
+    // Auto-advance to next box
+    if (text && index < 5) {
       inputs.current[index + 1]?.focus();
     }
   };
@@ -44,8 +59,8 @@ export default function EnterOTPScreen({ navigation, route }: any) {
       return;
     }
     const code = otp.join('');
-    if (code.length !== otp.length) {
-      setError('Please enter the full code.');
+    if (code.length !== 6) {
+      setError('Please enter all 6 digits.');
       return;
     }
     if (loading) return;
@@ -65,15 +80,26 @@ export default function EnterOTPScreen({ navigation, route }: any) {
   };
 
   const handleResend = async () => {
-    if (!email) return;
+    if (!email || countdown > 0) return;
+    setResendSuccess(false);
+    setError(null);
     try {
-      await fetch(`${API_BASE_URL}/auth/resend-signup-otp`, {
+      const res = await fetch(`${API_BASE_URL}/auth/resend-signup-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
+      if (res.ok) {
+        setOtp(['', '', '', '', '', '']);
+        inputs.current[0]?.focus();
+        setCountdown(119);
+        setResendSuccess(true);
+      } else {
+        const data = await res.json();
+        setError(data.error ?? 'Failed to resend OTP');
+      }
     } catch {
-      // Silently ignore for now
+      setError('Network error. Please try again.');
     }
   };
 
@@ -95,8 +121,8 @@ export default function EnterOTPScreen({ navigation, route }: any) {
           <View style={styles.headerComponent}>
             <Text style={styles.title}>Enter OTP</Text>
             <Text style={styles.subtitle}>
-              We have sent you an otp for verification on your email address{' '}
-              <Text style={styles.subtitleBold}>{email}</Text>
+              We sent a 6-digit code to{' '}
+              <Text style={styles.subtitleBold}>{email ?? 'your email'}</Text>
             </Text>
           </View>
         </View>
@@ -104,11 +130,10 @@ export default function EnterOTPScreen({ navigation, route }: any) {
         {/* Form content */}
         <View style={styles.formContent}>
 
-          {/* Fields container */}
           <View style={styles.fieldsContainer}>
             <View style={styles.otpFieldsContainer}>
 
-              {/* OTP boxes */}
+              {/* 6 OTP boxes */}
               <View style={styles.otpInputContainer}>
                 {otp.map((digit, index) => (
                   <TextInput
@@ -130,18 +155,30 @@ export default function EnterOTPScreen({ navigation, route }: any) {
 
               {/* Resend row */}
               <View style={styles.resendRow}>
-                <Text style={styles.resendTimer}>
-                  Resend in <Text style={styles.resendTimerBold}>1:59</Text>
-                </Text>
-                <TouchableOpacity onPress={handleResend}>
-                  <Text style={styles.resendOTP}>Resend OTP</Text>
+                {countdown > 0 ? (
+                  <Text style={styles.resendTimer}>
+                    Resend in <Text style={styles.resendTimerBold}>{formatTime(countdown)}</Text>
+                  </Text>
+                ) : (
+                  <Text style={styles.resendTimer}>Didn't receive the code?</Text>
+                )}
+                <TouchableOpacity onPress={handleResend} disabled={countdown > 0}>
+                  <Text style={[styles.resendOTP, countdown > 0 && { opacity: 0.4 }]}>
+                    Resend OTP
+                  </Text>
                 </TouchableOpacity>
               </View>
+
+              {/* Resend success message */}
+              {resendSuccess && (
+                <Text style={{ color: 'green', textAlign: 'center', fontSize: 14 }}>
+                  A new code has been sent to your email.
+                </Text>
+              )}
 
             </View>
           </View>
 
-          {/* Spacer */}
           <View style={{ flex: 1 }} />
 
           {/* Bottom frame */}
@@ -170,7 +207,6 @@ export default function EnterOTPScreen({ navigation, route }: any) {
           </View>
 
         </View>
-
       </View>
     </View>
   );
@@ -187,7 +223,7 @@ const styles = StyleSheet.create({
     gap: 32,
   },
   topContent: {
-    gap: 16, 
+    gap: 16,
   },
   eyebrow: {
     height: 21,
@@ -238,12 +274,12 @@ const styles = StyleSheet.create({
   otpInputContainer: {
     height: 60,
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
   },
   otpBox: {
     flex: 1,
     height: 60,
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     fontFamily: 'Inter_18pt-SemiBold',
     fontSize: 20,
