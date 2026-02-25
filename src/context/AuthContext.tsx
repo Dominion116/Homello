@@ -25,23 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [initializing, setInitializing] = useState(true);
 
-  // Restore session on app launch
   useEffect(() => {
-    const restore = async () => {
-      try {
-        const storedToken = await AsyncStorage.getItem('token');
-        const storedUser = await AsyncStorage.getItem('user');
-        if (storedToken && storedUser) {
-          setToken(storedToken);
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (e) {
-        console.error('Failed to restore session', e);
-      } finally {
-        setInitializing(false);
-      }
-    };
-    restore();
+    setInitializing(false);
   }, []);
 
   const saveSession = async (token: string, user: User) => {
